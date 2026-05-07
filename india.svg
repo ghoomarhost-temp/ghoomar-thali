@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" width="800" height="900" style="background-color: #1a0a13;">
+  <defs>
+    <style>
+      .india-map {
+        fill: #610e24;
+        fill-opacity: 0.18;
+        stroke: #e6b95c;
+        stroke-width: 2;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+      }
+      .marker {
+        fill: #e6b95c;
+      }
+      .marker-primary {
+        fill: #c4476a;
+      }
+      .marker-label {
+        font-family: 'Cinzel', serif;
+        font-size: 11px;
+        fill: #eadcd4;
+      }
+    </style>
+  </defs>
+
+  <!-- India Outline -->
+  <path class="india-map" d="
+    M 298 35
+    C 310 25, 330 18, 345 18
+    C 360 18, 390 25, 408 28
+    C 425 31, 450 38, 465 40
+    C 480 42, 500 50, 510 55
+    C 525 62, 540 75, 545 80
+    C 555 90, 565 105, 568 112
+    C 575 125, 585 140, 592 148
+    C 605 160, 615 170, 618 176
+    C 625 185, 635 200, 645 208
+    C 655 215, 660 230, 664 240
+    C 666 250, 660 260, 658 268
+    C 650 275, 640 280, 630 285
+    C 620 290, 610 300, 605 302
+    C 598 310, 592 325, 590 335
+    C 588 345, 586 360, 584 370
+    C 582 385, 584 400, 586 408
+    C 588 420, 584 440, 582 448
+    C 578 460, 568 475, 562 480
+    C 555 490, 542 500, 535 504
+    C 525 510, 515 520, 510 525
+    C 500 535, 492 548, 488 552
+    C 480 562, 472 575, 468 580
+    C 460 590, 450 605, 446 608
+    C 438 618, 424 630, 416 636
+    C 405 645, 390 655, 385 660
+    C 375 668, 360 680, 355 685
+    C 345 695, 336 710, 332 712
+    C 328 720, 320 740, 318 744
+    C 315 755, 310 770, 308 778
+    C 306 790, 304 810, 303 814
+    C 302 825, 300 840, 299 848
+    C 297 855, 294 870, 293 875
+    C 290 885, 288 880, 287 875
+    C 285 865, 278 850, 275 844
+    C 270 835, 264 820, 260 812
+    C 255 805, 245 788, 240 780
+    C 235 770, 225 755, 220 748
+    C 215 740, 205 725, 200 716
+    C 195 708, 188 692, 184 684
+    C 180 675, 174 660, 170 651
+    C 165 640, 158 625, 156 617
+    C 152 608, 145 590, 143 583
+    C 138 572, 132 555, 129 548
+    C 125 540, 118 520, 115 512
+    C 110 500, 104 485, 100 476
+    C 95 465, 90 448, 87 440
+    C 84 430, 80 410, 78 404
+    C 75 395, 72 375, 71 368
+    C 70 360, 68 340, 67 332
+    C 67 325, 68 305, 70 297
+    C 72 288, 76 270, 80 264
+    C 85 255, 92 242, 97 236
+    C 104 228, 115 218, 120 213
+    C 128 208, 138 198, 143 193
+    C 150 188, 158 178, 163 172
+    C 168 165, 175 155, 178 149
+    C 182 142, 188 130, 190 124
+    C 194 118, 200 105, 202 98
+    C 205 92, 212 80, 218 73
+    C 225 65, 235 55, 240 50
+    C 248 45, 260 38, 272 34
+    C 280 33, 290 35, 298 35
+    Z
+  " />
+
+  <!-- Markers -->
+  <g id="markers">
+    <circle cx="215" cy="102" r="3" class="marker" id="amritsar" />
+    <circle cx="248" cy="128" r="3" class="marker" id="ludhiana" />
+    <circle cx="268" cy="148" r="3" class="marker" id="mohali" />
+    <circle cx="312" cy="188" r="3" class="marker" id="pitampura" />
+    <circle cx="322" cy="200" r="3" class="marker" id="cp" />
+    <circle cx="318" cy="216" r="3" class="marker" id="vasantkunj" />
+    <circle cx="314" cy="228" r="3" class="marker" id="gurugram" />
+    <circle cx="340" cy="204" r="3" class="marker" id="noida" />
+    <circle cx="348" cy="192" r="3" class="marker" id="ghaziabad" />
+    <circle cx="352" cy="255" r="3" class="marker" id="agra" />
+    <circle cx="398" cy="278" r="3" class="marker" id="kanpur" />
+    <circle cx="478" cy="290" r="3" class="marker" id="patna" />
+    <circle cx="588" cy="248" r="3" class="marker" id="guwahati" />
+    <circle cx="348" cy="380" r="3" class="marker" id="bhopal" />
+    <circle cx="220" cy="438" r="3" class="marker" id="vadodara" />
+    <circle cx="252" cy="520" r="3" class="marker" id="pune" />
+    <circle cx="218" cy="578" r="3" class="marker" id="goa" />
+    <circle cx="228" cy="622" r="3" class="marker" id="mangalore" />
+    <circle cx="275" cy="268" r="6" class="marker-primary" id="jaipur" />
+  </g>
+
+  <!-- Labels for reference in Illustrator -->
+  <g id="labels" class="marker-label">
+    <text x="223" y="105">Amritsar</text>
+    <text x="256" y="131">Ludhiana</text>
+    <text x="276" y="151">Mohali</text>
+    <text x="320" y="191">Pitampura</text>
+    <text x="330" y="203">CP</text>
+    <text x="326" y="219">Vasant Kunj</text>
+    <text x="322" y="231">Gurugram</text>
+    <text x="348" y="207">Noida</text>
+    <text x="356" y="195">Ghaziabad</text>
+    <text x="360" y="258">Agra</text>
+    <text x="406" y="281">Kanpur</text>
+    <text x="486" y="293">Patna</text>
+    <text x="596" y="251">Guwahati</text>
+    <text x="356" y="383">Bhopal</text>
+    <text x="228" y="441">Vadodara</text>
+    <text x="260" y="523">Pune</text>
+    <text x="226" y="581">Goa</text>
+    <text x="236" y="625">Mangalore</text>
+    <text x="285" y="272" style="fill: #c4476a; font-weight: bold;">Jaipur</text>
+  </g>
+</svg>
