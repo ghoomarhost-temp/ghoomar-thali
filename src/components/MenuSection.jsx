@@ -185,7 +185,10 @@ export default function MenuSection() {
     if (items?.length) {
       gsap.to(items, {
         opacity: 0, scale: 0.88, duration: 0.22, ease: 'power2.in',
-        onComplete: () => { setActiveFilter(cat); setGridKey(k => k + 1); },
+        onComplete: () => { 
+          setActiveFilter(cat); 
+          setGridKey(k => k + 1); 
+        },
       });
     } else {
       setActiveFilter(cat);
@@ -347,7 +350,11 @@ export default function MenuSection() {
       </nav>
 
       {/* ── Dish Grid ── */}
-      <div ref={gridRef} className="menu-circle-grid" key={activeFilter}>
+      <div 
+        ref={gridRef} 
+        className="menu-circle-grid" 
+        key={activeFilter}
+      >
         {filteredItems.map((item, i) => {
           const row       = Math.floor(i / 5);
           const isOddRow  = row % 2 === 1;

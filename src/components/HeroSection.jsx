@@ -1,9 +1,24 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap'; // HMR trigger
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { splitWords } from '../utils';
-
 const HERO_TEXT = "Experience the richness of Rajasthan. Every pure vegetarian thali is a celebration of its culinary heritage, brought to life through 24+ soulful dishes, served unlimited with timeless tradition and authentic flavors.";
+
+const TOTAL_CHARS = HERO_TEXT.length;
+
+const parsedHeroText = (() => {
+  const words = HERO_TEXT.split(' ');
+  let currentIndex = 0;
+  return words.map((word, wIdx) => {
+    const chars = word.split('').map(char => {
+      const i = currentIndex++;
+      // Calculate distance to closest edge to animate simultaneously from both ends
+      const distToEdge = Math.min(i, TOTAL_CHARS - 1 - i);
+      return { char, delay: distToEdge * 0.026 }; // slightly increased delay factor so it takes roughly same time
+    });
+    currentIndex++; // account for space
+    return { chars, isLast: wIdx === words.length - 1 };
+  });
+})();
 
 export default function HeroSection() {
   const sectionRef = useRef(null);
@@ -221,15 +236,20 @@ export default function HeroSection() {
             }}
             aria-label={HERO_TEXT}
           >
-            {HERO_TEXT.split('').map((char, i) => (
-              <span
-                key={i}
-                className="quote-char"
-                style={{ animationDelay: `${i * 0.013}s` }}
-              >
-                {char}
-              </span>
-            ))}
+            {parsedHeroText.map((wordObj, wIdx) => [
+              <span key={`w-${wIdx}`} style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+                {wordObj.chars.map((c, cIdx) => (
+                  <span
+                    key={cIdx}
+                    className="quote-char"
+                    style={{ animationDelay: `${c.delay}s` }}
+                  >
+                    {c.char}
+                  </span>
+                ))}
+              </span>,
+              !wordObj.isLast && <span key={`s-${wIdx}`}> </span>
+            ])}
           </p>
 
           <div ref={ctaRef} className="hero-cta" style={{ marginTop: 52, opacity: 0 }}>

@@ -234,44 +234,23 @@ export default function LegacySection() {
           );
       });
 
-
       // ── Container slides out when section below enters ───────────────────────
-      // finalContainerY is the resting position after all 4 cards are revealed.
-      // The slide-out moves from finalContainerY to finalContainerY-vh (a full viewport
-      // height upward), which makes the pinned container exit the screen exactly as
-      // if it were a normal element scrolling out.
       const finalContainerY = containerYForCard(NUM_CARDS - 1);
 
-      const slideOutTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: outer,
-          start:   () => `top+=${totalPx - vh} top`,
-          end:     () => `top+=${totalPx} top`,
-          scrub:   true,
-          // Hard-snap container to finalContainerY on both directions so there is
-          // never a stale y-value when the slide-out segment begins or is reversed.
-          onEnter:     () => gsap.set(containerRef.current, { y: finalContainerY }),
-          onEnterBack: () => {
-            // onEnterBack fires at progress=1 (re-entering from below the trigger).
-            // Snap to the END-state y (off-screen top) before restoring visibility
-            // so there is never a frame where the container is fully visible at the
-            // wrong position. The scrub then animates it back down from here.
-            gsap.set(containerRef.current, { y: finalContainerY - vh });
-            gsap.set(containerRef.current, { visibility: 'visible' });
-          },
-          onLeave:     () => gsap.set(containerRef.current, { visibility: 'hidden' }),
-          onLeaveBack: () => gsap.set(containerRef.current, { y: finalContainerY }),
-        },
-      });
-      // Explicit fromTo — GSAP must know the exact start state so reverse scrub
-      // never interpolates from y:0.
-      slideOutTl.fromTo(
-        containerRef.current,
+      gsap.fromTo(containerRef.current,
         { y: finalContainerY },
-        { y: finalContainerY - vh, ease: 'none', duration: 1 },
-        0
+        { 
+          y: finalContainerY - vh, 
+          ease: 'none', 
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: outer,
+            start:   () => `top+=${totalPx - vh} top`,
+            end:     () => `top+=${totalPx} top`,
+            scrub:   true,
+          }
+        }
       );
-
 
     }, outerRef);
     return () => ctx.revert();

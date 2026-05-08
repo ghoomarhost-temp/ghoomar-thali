@@ -119,19 +119,23 @@ export default function ReserveSection() {
     backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
     background: `
-      radial-gradient(ellipse 80% 65% at 12% 8%,   rgba(158, 32, 68, 0.55) 0%, rgba(120, 20, 52, 0.25) 45%, transparent 75%),
-      radial-gradient(ellipse 60% 72% at 80% 5%,   rgba(128, 18, 55, 0.45) 0%, rgba(100, 14, 44, 0.20) 42%, transparent 72%),
-      radial-gradient(ellipse 65% 55% at 94% 45%,  rgba(110, 14, 48, 0.38) 0%, rgba(85,  10, 38, 0.16) 40%, transparent 70%),
-      radial-gradient(ellipse 72% 58% at 30% 75%,  rgba(96,  10, 40, 0.35) 0%, rgba(72,   8, 32, 0.15) 44%, transparent 74%),
-      radial-gradient(ellipse 50% 45% at 62% 30%,  rgba(172, 40, 75, 0.22) 0%, rgba(130, 28, 58, 0.10) 40%, transparent 68%),
-      radial-gradient(ellipse 75% 48% at 5%  58%,  rgba(90,  12, 38, 0.30) 0%, rgba(68,   8, 28, 0.12) 45%, transparent 72%),
-      radial-gradient(ellipse 90% 60% at 50% 105%, rgba(55,   5, 22, 0.55) 0%, rgba(40,   4, 16, 0.25) 45%, transparent 75%),
-      #0e0208
+      /* Luminous maroon blooms */
+      radial-gradient(circle at 18% 22%, rgba(150, 20, 50, 0.35) 0%, rgba(150, 20, 50, 0.1) 25%, transparent 45%),
+      radial-gradient(circle at 82% 78%, rgba(130, 15, 45, 0.3) 0%, rgba(130, 15, 45, 0.1) 25%, transparent 50%),
+      /* Vibrant jewel pink blooms */
+      radial-gradient(circle at 85% 25%, rgba(240, 40, 110, 0.4) 0%, rgba(240, 40, 110, 0.15) 25%, transparent 50%),
+      radial-gradient(circle at 25% 85%, rgba(210, 25, 90, 0.35) 0%, rgba(210, 25, 90, 0.1) 25%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255, 60, 130, 0.2) 0%, transparent 55%),
+      /* Deep wine grounding elements */
+      radial-gradient(ellipse 50% 60% at 95% 95%, rgba(100, 10, 40, 0.5) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 5% 95%, rgba(80, 5, 30, 0.5) 0%, transparent 60%),
+      /* Translucent dark base */
+      rgba(22, 8, 14, 0.55)
     `,
-    backdropFilter: 'blur(30px)',
-    WebkitBackdropFilter: 'blur(30px)',
-    border: '1px solid rgba(230,185,92,0.08)',
-    boxShadow: 'inset 0 0 0 1px rgba(230,185,92,0.05), inset 0 0 40px rgba(0,0,0,0.8), 0 30px 60px rgba(0,0,0,0.8)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    border: '1px solid rgba(230, 185, 92, 0.4)',
+    boxShadow: 'inset 0 0 60px rgba(230, 185, 92, 0.05), inset 0 0 20px rgba(130, 30, 60, 0.15), 0 40px 80px rgba(0,0,0,0.7)',
     borderRadius: 8,
     display: 'flex', flexDirection: 'column',
     alignItems: 'center', justifyContent: 'center',
@@ -185,6 +189,7 @@ export default function ReserveSection() {
       style={{ 
         position: 'relative',
         height: '100vh',
+        marginBottom: '15vh',
         zIndex: 2,
         isolation: 'isolate',
       }}
@@ -229,37 +234,27 @@ export default function ReserveSection() {
           </h2>
         </div>
 
-        {/* Stages 2 & 3 — Massive 85% Card */}
+        {/* Stages 2 & 3 — Card (Scaled down ~7% and shifted downwards) */}
         <div
           ref={cardWrapRef}
           style={{
             position: 'relative',
-            width: '85vw', height: '85vh', maxWidth: 1400, zIndex: 10,
+            width: '79vw', height: '79vh', maxWidth: 1300, zIndex: 10,
+            marginTop: '4vh',
             willChange: 'transform, opacity',
             perspective: '1800px',
           }}
         >
           {/* Front face */}
-            <div ref={cardFrontRef} style={{ ...face, paddingTop: '18vh' }}>
+            <div ref={cardFrontRef} style={{ ...face, paddingTop: '28vh' }}>
               {['tl','tr','bl','br'].map(p => <RoyalCorner key={p} pos={p} />)}
               
-              {/* Elegant Vertical Emblem */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, marginBottom: 40, opacity: 0.85 }}>
-                <div style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, transparent, var(--gold))' }} />
-                <div style={{ fontSize: '1.4rem', color: 'var(--gold)', transform: 'rotate(45deg)' }}>✦</div>
-              </div>
-
-              <span style={{ 
-                fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--gold)', 
-                letterSpacing: '0.5em', textTransform: 'uppercase', display: 'block', marginBottom: 20 
-              }}>
-                A Royal Welcome
-              </span>
               
+                            
               <h3 style={{
                 fontFamily: 'var(--font-serif)', fontWeight: 300,
-                fontSize: 'clamp(2.4rem, 4vw, 3.8rem)',
-                color: 'var(--ivory)', lineHeight: 1.25, textAlign: 'center', maxWidth: 700, marginBottom: 24,
+                fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
+                color: 'var(--ivory)', lineHeight: 1.25, textAlign: 'center', maxWidth: 700, marginBottom: 16,
               }}>
                 Every meal is a <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Ceremony</em>.<br />
                 Yours begins here.
@@ -272,6 +267,13 @@ export default function ReserveSection() {
               }}>
                 We have hosted dignitaries, dreamers, and kings. Scroll down to secure your place at our table.
               </p>
+
+              {/* Ornate line at end of content */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 32, opacity: 0.7 }}>
+                <div style={{ width: 80, height: 1, background: 'linear-gradient(to right, transparent, var(--gold))' }} />
+                <div style={{ width: 6, height: 6, background: 'var(--gold)', transform: 'rotate(45deg)' }} />
+                <div style={{ width: 80, height: 1, background: 'linear-gradient(to left, transparent, var(--gold))' }} />
+              </div>
             </div>
 
             {/* Back face */}
@@ -357,21 +359,22 @@ export default function ReserveSection() {
         }
         .royal-input {
           width: 100%;
-          background: transparent;
-          border: none;
-          border-bottom: 1px solid rgba(230, 185, 92, 0.25);
+          background: rgba(26, 10, 19, 0.4);
+          border: 1px solid rgba(230, 185, 92, 0.2);
+          border-radius: 4px;
           color: var(--ivory);
           font-family: var(--font-body);
-          font-size: 1.15rem;
-          padding: 10px 0;
+          font-size: 1.05rem;
+          padding: 12px 16px;
           outline: none;
-          transition: border-color 0.3s ease;
+          transition: border-color 0.3s ease, background 0.3s ease;
           appearance: none;
           -webkit-appearance: none;
           cursor: pointer;
         }
         .royal-input:focus {
-          border-bottom: 1px solid rgba(230, 185, 92, 0.9);
+          border-color: rgba(230, 185, 92, 0.6);
+          background: rgba(26, 10, 19, 0.7);
         }
         .royal-input option {
           background: #1a0a13;
@@ -383,19 +386,34 @@ export default function ReserveSection() {
         .royal-select-wrapper::after {
           content: "▼";
           position: absolute;
-          right: 0;
+          right: 16px;
           top: 50%;
           transform: translateY(-50%);
           color: rgba(230, 185, 92, 0.5);
-          font-size: 0.5rem;
+          font-size: 0.6rem;
           pointer-events: none;
         }
         ::-webkit-calendar-picker-indicator {
-          filter: invert(1) sepia(1) saturate(5) hue-rotate(350deg);
-          opacity: 0.7;
+          filter: invert(70%) sepia(40%) saturate(1000%) hue-rotate(350deg) brightness(120%) contrast(120%);
+          opacity: 0.8;
           cursor: pointer;
+          padding-right: 8px;
         }
       `}</style>
+
+      {/* Bottom blending gradient to seamlessly merge with the footer */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: -1,
+          left: 0,
+          right: 0,
+          height: '20vh',
+          background: 'linear-gradient(to bottom, transparent 0%, var(--black) 100%)',
+          zIndex: 20,
+          pointerEvents: 'none',
+        }}
+      />
     </div>
   );
 }

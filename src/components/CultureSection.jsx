@@ -9,25 +9,25 @@ const activities = [
   {
     id: 'kalbelia', number: '01', tag: 'Folk Dance', title: 'Kalbelia Dance',
     desc: 'The sinuous, hypnotic movements of the Kalbelia — a UNESCO-recognized folk dance of the snake charmers — weave spells of beauty in the firelit courtyard of Ghoomar Thali.',
-    image: '/images/ghoomar_dance_masked_1776802763569.png',
+    image: '/images/kalbelia_dance.png',
     enterDir: 'right',
   },
   {
     id: 'bhopa', number: '02', tag: 'Ritual Music', title: 'Bhopa Bards',
     desc: "The Bhopa priests-musicians narrate epic tales of Rajasthani heroes, accompanied by the haunting Ravanahatha — one of the world's oldest string instruments, played beneath open stars.",
-    image: '/images/desert_caravan_1776795822787.png',
+    image: '/images/bhopa_bard.png',
     enterDir: 'left',
   },
   {
     id: 'jadugar', number: '03', tag: 'Mystic Arts', title: 'Jadugar Magic',
     desc: "Witness the ancient art of Indian street magic — Jadugar performances that have dazzled royalty and wanderers across centuries of Rajasthan's storied, mystical history.",
-    image: '/images/matka_dance_masked_1776802777661.png',
+    image: '/images/jadugar_magic.png',
     enterDir: 'right',
   },
   {
     id: 'kathputli', number: '04', tag: 'Puppetry Theatre', title: 'Kathputli Theatre',
     desc: "Centuries-old tales of kings and warriors brought to life by wooden dolls and the virtuosic hands of the Bhatt puppeteers — Rajasthan's oldest living theatrical tradition.",
-    image: '/images/kathputli_masked_1776802730323.png',
+    image: '/images/kathputli_puppet.png',
     enterDir: 'left',
   },
 ];
@@ -74,23 +74,22 @@ export default function CultureSection() {
         pinSpacing: false,
       });
 
-      // ── Last-slide exit: translate whole container upward (no blank screen) ──
-      // Instead of fading to empty, the pinned viewport slides up like a normal
-      // section, revealing the section below without a blank/black gap.
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: outerRef.current,
-          start: () => `top+=${totalScroll - vh * 0.55} top`,
-          end: () => `top+=${totalScroll} top`,
-          scrub: CULTURE_SCRUB * 0.7,
-          onLeave:     () => gsap.set(stickyRef.current, { visibility: 'hidden' }),
-          onLeaveBack: () => gsap.set(stickyRef.current, { y: 0, visibility: 'visible' }),
-          onEnterBack: () => {
-            gsap.set(stickyRef.current, { y: -vh });
-            gsap.set(stickyRef.current, { visibility: 'visible' });
-          },
-        },
-      }).to(stickyRef.current, { y: -vh, ease: 'none', duration: 1 });
+      // ── Last-slide exit: translate whole container upward ───────────────────
+      // Smoothly slides the pinned container out of view naturally.
+      gsap.fromTo(stickyRef.current,
+        { y: 0 },
+        { 
+          y: -vh, 
+          ease: 'none', 
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: outerRef.current,
+            start: () => `top+=${totalScroll - vh} top`,
+            end: () => `top+=${totalScroll} top`,
+            scrub: true,
+          }
+        }
+      );
 
       // ── Per-panel ─────────────────────────────────────────────────────────────
       panelEls.forEach((panel, i) => {

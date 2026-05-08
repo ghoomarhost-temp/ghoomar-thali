@@ -22,7 +22,7 @@ const JOURNEY = [
   { id: 'bhopal', city: 'Bhopal', region: 'Madhya Pradesh', tag: 'City of Lakes', desc: 'Draped in twin lakes and Nawabi heritage — our Rajputana court finds its deepest spiritual cousin here.', svgX: 255, svgY: 419, zoom: 4.2 },
   { id: 'vadodara', city: 'Vadodara', region: 'Gujarat', tag: 'The Cultural Capital', desc: 'The Maratha royal city that opens its arms to Rajputana hospitality with unmatched grace and warmth.', svgX: 141, svgY: 447, zoom: 4.5 },
   { id: 'pune', city: 'Pune', region: 'Maharashtra', tag: 'Oxford of the East', desc: 'Where scholars and soldiers have dined for centuries — a new royal court now firmly established.', svgX: 159, svgY: 558, zoom: 4.2 },
-  { id: 'goa', city: 'Goa', region: 'Goa', tag: 'Pearl of the Orient', desc: 'Sun-kissed and gold-washed — our coastal outpost where the spirit of Rajputana meets the Arabian Sea.', svgX: 158, svgY: 647, zoom: 4.8 },
+  { id: 'goa', city: 'Goa', region: 'Goa', tag: 'Pearl of the Orient', desc: 'Sun-kissed and gold-washed — our coastal outpost where the spirit of Rajputana meets the Arabian Sea.', svgX: 155, svgY: 660, zoom: 4.8 },
   { id: 'mangalore', city: 'Mangalore', region: 'Karnataka', tag: 'Port of Perfumes', desc: 'Spices from across India converge at this fragrant coast — a fitting home for our spice-mastered heritage.', svgX: 186, svgY: 723, zoom: 4.8 },
   { id: 'jaipur', city: 'Jaipur', region: 'Rajasthan', tag: 'The Origin — The Pink City', desc: 'Here, on the rose-red streets of the Pink City, it all began. Every feast across the empire traces its soul back to this royal kitchen.', svgX: 211, svgY: 311, zoom: 4.5, primary: true },
 ];
@@ -51,6 +51,12 @@ function trailPath(a, b) {
   const cpy = (my + (dx / len) * curve).toFixed(1);
   return `M ${a.svgX} ${a.svgY} Q ${cpx} ${cpy} ${b.svgX} ${b.svgY}`;
 }
+
+// Pin shape: tip at origin (0,0), head extends upward by sz*2.4
+const pinPath = (sz) =>
+  `M 0,0 C ${-sz*0.4},${-sz*0.9} ${-sz},${-sz*1.7} ${-sz},${-sz*2.4}` +
+  ` A ${sz},${sz} 0 1,1 ${sz},${-sz*2.4}` +
+  ` C ${sz},${-sz*1.7} ${sz*0.4},${-sz*0.9} 0,0 Z`;
 
 const sortedByX = [...JOURNEY].sort((a, b) => a.svgX - b.svgX);
 const midIndex = Math.ceil(sortedByX.length / 2);
@@ -153,7 +159,7 @@ export default function LocationSection() {
       gsap.set(svgRef.current, { attr: { viewBox: FULL_VB } });
       gsap.set('.marker-group .pulse-ring', { opacity: 0, display: 'none' });
       gsap.set('.marker-group .pulse-ring-primary', { opacity: 0, display: 'none' });
-      gsap.set('.marker-group .solid-dot', { opacity: 0, scale: 0.6 });
+      gsap.set('.marker-group .solid-dot', { opacity: 0 });
       gsap.set('.trail-path', { opacity: 0 });
       gsap.set('.loc-text', { opacity: 0, y: 30 });
 
@@ -229,7 +235,7 @@ export default function LocationSection() {
           const prevPulseClass = prevLoc.primary ? '.pulse-ring-primary' : '.pulse-ring';
           tl.to(prevMarkerEl.querySelector(prevPulseClass), { opacity: 0, duration: 0.2 }, loopStart);
           tl.set(prevMarkerEl.querySelector(prevPulseClass), { display: 'none' }, loopStart + 0.2);
-          tl.to(prevMarkerEl.querySelector('.solid-dot'), { scale: 0.7, opacity: 0.6, fill: 'rgba(197,164,109,0.5)', duration: 0.3 }, loopStart);
+          tl.to(prevMarkerEl.querySelector('.solid-dot'), { opacity: 0.5, duration: 0.7 }, loopStart);
         }
 
         // ── MAP MOVE — starts immediately, no delay ──────────────────────────
@@ -248,13 +254,13 @@ export default function LocationSection() {
           tl.to(trailEl, { opacity: 0, duration: 0.3, ease: 'power2.in' }, loopStart + STEP_MAP_DUR);
         }
 
-        // ── MARKER ACTIVATE at 75% of map move ──────────────────────────────
-        const arrivalTime = loopStart + STEP_MAP_DUR * 0.75;
+        // ── MARKER ACTIVATE at 96% of map move — viewBox fully settled ───────
+        const arrivalTime = loopStart + STEP_MAP_DUR * 0.96;
         const pulseClass = loc.primary ? '.pulse-ring-primary' : '.pulse-ring';
         const activeColor = loc.primary ? '#C4476A' : 'rgba(197,164,109,1)';
         tl.set(markerEl.querySelector(pulseClass), { display: 'block' }, arrivalTime);
-        tl.to(markerEl.querySelector(pulseClass), { opacity: 1, duration: 0.2 }, arrivalTime);
-        tl.to(markerEl.querySelector('.solid-dot'), { scale: 1.2, opacity: 1, fill: activeColor, duration: 0.3 }, arrivalTime);
+        tl.to(markerEl.querySelector(pulseClass), { opacity: 1, duration: 0.15 }, arrivalTime);
+        tl.to(markerEl.querySelector('.solid-dot'), { opacity: 1, duration: 0.2 }, arrivalTime);
 
         // ── TEXT ENTRY — starts at 30% of map move (crossfades with exit) ───
         const textStart = loopStart + STEP_MAP_DUR * 0.3;
@@ -271,24 +277,15 @@ export default function LocationSection() {
       tl.to(lastTextEl, { opacity: 0, y: -20, duration: PH4_ZOOM_DUR * 0.5 }, time);
       tl.to(svgRef.current, { attr: { viewBox: FULL_VB }, duration: PH4_ZOOM_DUR, ease: 'power2.inOut' }, time);
 
-      // Reveal ALL pulses and scale up ALL markers for a grand finale
+      // Reveal ALL pulses and markers for a grand finale
       tl.set(['.pulse-ring', '.pulse-ring-primary'], { display: 'block' }, time + PH4_ZOOM_DUR * 0.4);
       tl.to(['.pulse-ring', '.pulse-ring-primary'], { opacity: 1, duration: PH4_ZOOM_DUR * 0.6 }, time + PH4_ZOOM_DUR * 0.4);
       tl.to('.solid-dot', { 
-        scale: 1.3, 
         opacity: 1, 
         duration: PH4_ZOOM_DUR * 0.6, 
         stagger: { each: 0.02, from: 'center' },
-        ease: 'back.out(1.7)'
+        ease: 'power2.out'
       }, time + PH4_ZOOM_DUR * 0.4);
-
-      // Extra emphasis on Jaipur (origin)
-      const jaipurMarker = svgRef.current.querySelector(`#m-jaipur`);
-      tl.to(jaipurMarker.querySelector('.solid-dot'), { 
-        scale: 2.2, 
-        fill: '#C4476A', 
-        duration: PH4_ZOOM_DUR * 0.5 
-      }, time + PH4_ZOOM_DUR * 0.5);
 
       time += PH4_ZOOM_DUR;
 
@@ -531,27 +528,42 @@ export default function LocationSection() {
               </g>
 
               <g id="markers">
-                {JOURNEY.map((loc, i) => (
-                  <g key={loc.id} id={`m-${loc.id}`} className="marker-group">
-                    {/* Enhanced pulse ring - larger base radius for better visibility */}
-                    <circle
-                      className={loc.primary ? 'pulse-ring-primary' : 'pulse-ring'}
-                      cx={loc.svgX} cy={loc.svgY}
-                      r={loc.primary ? 22 : 14}
-                      fill={loc.primary ? 'rgba(196,71,106,0.4)' : 'rgba(197,164,109,0.3)'}
-                      style={{ animationDelay: `${((i * 0.35) % 3).toFixed(2)}s` }}
-                    />
-                    {/* Solid core - slightly larger with a subtle premium border */}
-                    <circle
-                      className="solid-dot"
-                      cx={loc.svgX} cy={loc.svgY}
-                      r={loc.primary ? 7 : 4.5}
-                      fill={loc.primary ? '#C4476A' : 'rgba(197,164,109,1)'}
-                      stroke="rgba(255,255,255,0.2)"
-                      strokeWidth="1"
-                    />
-                  </g>
-                ))}
+                {JOURNEY.map((loc, i) => {
+                  const sz = loc.primary ? 9.5 : 6;
+                  const headY = loc.svgY - sz * 2.4;
+                  const pinColor = loc.primary ? '#C4476A' : 'rgba(197,164,109,1)';
+                  const pulseColor = loc.primary ? 'rgba(196,71,106,0.4)' : 'rgba(197,164,109,0.3)';
+                  return (
+                    <g key={loc.id} id={`m-${loc.id}`} className="marker-group">
+                      {/* Pulse ring around pin head */}
+                      <circle
+                        className={loc.primary ? 'pulse-ring-primary' : 'pulse-ring'}
+                        cx={loc.svgX} cy={headY}
+                        r={loc.primary ? sz * 2.2 : sz * 1.8}
+                        fill={pulseColor}
+                        style={{ animationDelay: `${((i * 0.35) % 3).toFixed(2)}s` }}
+                      />
+                      {/* Pin: tip at (svgX, svgY), body extends upward */}
+                      <g
+                        className="solid-dot"
+                        transform={`translate(${loc.svgX}, ${loc.svgY})`}
+                        style={{ transformBox: 'fill-box', transformOrigin: '50% 29%' }}
+                      >
+                        <path
+                          d={pinPath(sz)}
+                          fill={pinColor}
+                          stroke="rgba(255,255,255,0.2)"
+                          strokeWidth="0.6"
+                        />
+                        {/* Inner circle hole */}
+                        <circle
+                          cx={0} cy={-sz * 2.4} r={sz * 0.42}
+                          style={{ fill: 'rgba(255,255,255,0.92)' }}
+                        />
+                      </g>
+                    </g>
+                  );
+                })}
               </g>
             </svg>
           )}

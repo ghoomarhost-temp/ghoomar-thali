@@ -23,9 +23,8 @@ export default function QuickBookSection() {
       width: 80, height: 80, borderRadius: '50%', background: '#FC8019',
       display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
     }}>
-      <svg viewBox="0 0 100 100" style={{ width: 40, height: 40, fill: '#fff' }}>
-        {/* Simple approximation of Swiggy 'S' icon shape */}
-        <path d="M50 10 C30 10, 20 25, 20 25 L35 35 C35 35, 40 25, 50 25 C60 25, 65 30, 65 40 C65 50, 50 55, 35 60 C20 65, 10 80, 25 95 C25 95, 40 100, 50 100 C70 100, 80 85, 80 85 L65 75 C65 75, 60 85, 50 85 C40 85, 35 80, 35 70 C35 60, 50 55, 65 50 C80 45, 90 30, 75 15 C75 15, 60 10, 50 10 Z" />
+      <svg viewBox="0 0 24 24" style={{ width: 45, height: 45, fill: '#fff' }}>
+        <path d="M12.034 24c-.376-.411-2.075-2.584-3.95-5.513-.547-.916-.901-1.63-.833-1.814.178-.48 3.355-.743 4.333-.308.298.132.29.307.29.409 0 .44-.022 1.619-.022 1.619a.441.441 0 1 0 .883-.002l-.005-2.939c0-.255-.278-.319-.331-.329-.511-.002-1.548-.006-2.661-.006-2.457 0-3.006.101-3.423-.172-.904-.591-2.383-4.577-2.417-6.819C3.849 4.964 5.723 2.225 8.362.868A8.13 8.13 0 0 1 12.026 0c4.177 0 7.617 3.153 8.075 7.209l.001.011c.084.981-5.321 1.189-6.39.904-.164-.044-.206-.212-.206-.284L13.5 4.996a.442.442 0 0 0-.884.002l.009 3.866a.33.33 0 0 0 .268.32l3.354-.001c1.79 0 2.542.207 3.042.588.333.254.461.739.349 1.37C18.633 16.755 12.273 23.71 12.034 24z" />
       </svg>
     </div>
   );
@@ -92,7 +91,7 @@ export default function QuickBookSection() {
         {/* Zomato Card */}
         <a 
           href="#"
-          className="quick-book-card"
+          className="quick-book-card zomato-card"
           style={{
             flex: '1 1 400px',
             display: 'flex', alignItems: 'center', gap: 24,
@@ -134,7 +133,7 @@ export default function QuickBookSection() {
         {/* Swiggy Card */}
         <a 
           href="#"
-          className="quick-book-card"
+          className="quick-book-card swiggy-card"
           style={{
             flex: '1 1 400px',
             display: 'flex', alignItems: 'center', gap: 24,
@@ -169,11 +168,22 @@ export default function QuickBookSection() {
       </div>
 
       <style>{`
+        .zomato-card {
+          box-shadow: inset 0 0 60px rgba(226, 55, 68, 0.25), inset 0 0 20px rgba(226, 55, 68, 0.2);
+        }
+        .swiggy-card {
+          box-shadow: inset 0 0 60px rgba(252, 128, 25, 0.25), inset 0 0 20px rgba(252, 128, 25, 0.2);
+        }
         .quick-book-card:hover {
           background: linear-gradient(135deg, rgba(42, 16, 29, 0.7) 0%, rgba(26, 10, 19, 0.8) 100%) !important;
           border-color: rgba(230,185,92,0.4) !important;
           transform: translateY(-4px);
-          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .zomato-card:hover {
+          box-shadow: inset 0 0 100px rgba(226, 55, 68, 0.4), inset 0 0 35px rgba(226, 55, 68, 0.3), 0 15px 35px rgba(0,0,0,0.4) !important;
+        }
+        .swiggy-card:hover {
+          box-shadow: inset 0 0 100px rgba(252, 128, 25, 0.4), inset 0 0 35px rgba(252, 128, 25, 0.3), 0 15px 35px rgba(0,0,0,0.4) !important;
         }
         .quick-book-card:hover .arrow-icon {
           transform: translateX(6px);

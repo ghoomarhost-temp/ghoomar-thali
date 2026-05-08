@@ -623,13 +623,14 @@ html.lenis { height: auto; }
 
 
 /* ---------------------------------------------------------------------------
-   ROYAL MENU SECTION — Premium Interactive Grid
+   ROYAL MENU SECTION ï¿½ Premium Interactive Grid
    --------------------------------------------------------------------------- */
 
 .royal-menu-section {
   position: relative;
   padding: 120px 0 160px;
   overflow: hidden;
+  overflow-anchor: none;
   background: linear-gradient(180deg, var(--black) 0%, #200b18 20%, #2a0d1e 50%, #1e0912 80%, var(--black) 100%);
 }
 .menu-bg-glow { position: absolute; pointer-events: none; border-radius: 50%; filter: blur(120px); opacity: 0.18; z-index: 0; }
@@ -703,12 +704,12 @@ html.lenis { height: auto; }
   to   { opacity: 1; }
 }
 
-/* The card itself — position/size set entirely by GSAP */
+/* The card itself ï¿½ position/size set entirely by GSAP */
 .dish-expand-card {
   position: fixed;           /* GSAP owns left/top/width/height */
   z-index: 200;
   overflow: hidden;
-  /* base shadow — GSAP doesn't touch this */
+  /* base shadow ï¿½ GSAP doesn't touch this */
   box-shadow:
     0 0 0 1px rgba(230, 185, 92, 0.28),
     0 40px 120px rgba(0, 0, 0, 0.7),
@@ -749,7 +750,7 @@ html.lenis { height: auto; }
     );
 }
 
-/* Content wrapper — opacity controlled by GSAP */
+/* Content wrapper ï¿½ opacity controlled by GSAP */
 .dec-content {
   position: absolute;
   inset: 0;
