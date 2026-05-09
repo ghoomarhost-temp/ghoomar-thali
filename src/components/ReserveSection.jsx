@@ -18,20 +18,8 @@ export default function ReserveSection() {
   const cardFrontRef = useRef(null);
   const cardBackRef  = useRef(null);
 
-  // Deferred refresh: LocationSection's SVG loads async and its pinSpacing
-  // spacer changes the document height. We must re-calculate after it settles.
-  useEffect(() => {
-    const t1 = setTimeout(() => { ScrollTrigger.sort(); ScrollTrigger.refresh(); }, 400);
-    const t2 = setTimeout(() => { ScrollTrigger.sort(); ScrollTrigger.refresh(); }, 900);
-    const t3 = setTimeout(() => { ScrollTrigger.sort(); ScrollTrigger.refresh(); }, 1500);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, []);
-
   useEffect(() => {
     const ctx = gsap.context(() => {
-
-      const vh = window.innerHeight;
-      const scrollDistance = TOTAL_VH * vh;
 
       // ── INITIAL STATES ──────────────────────────────────────────────────────
       // All visual elements start at opacity:0. The section is "visible" in
@@ -76,7 +64,7 @@ export default function ReserveSection() {
         scrollTrigger: {
           trigger: outerRef.current,
           start: 'top top',
-          end: `+=${scrollDistance}`,
+          end: () => `+=${TOTAL_VH * window.innerHeight}`,
           scrub: 0.5,
           pin: true,
           pinSpacing: true,

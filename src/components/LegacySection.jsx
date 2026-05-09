@@ -284,10 +284,10 @@ export default function LegacySection() {
           background: 'radial-gradient(ellipse at 50% 40%, rgba(142,31,60,0.14) 0%, transparent 65%)',
         }} />
 
-        {/* Top edge fade only — bottom fade removed: it was creating the "envelope" mask effect */}
+        {/* Top edge feather — softens the entry without creating a hard black bar */}
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2,
-          background: 'linear-gradient(to bottom, var(--black) 0%, transparent 11%)',
+          background: 'linear-gradient(to bottom, rgba(26,10,19,0.9) 0%, rgba(26,10,19,0.45) 6%, rgba(26,10,19,0.1) 13%, transparent 22%)',
         }} />
 
         {/* ── Section Title ─────────────────────────────────────────────────── */}

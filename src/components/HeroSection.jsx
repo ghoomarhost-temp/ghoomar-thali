@@ -178,7 +178,7 @@ export default function HeroSection() {
             position: 'absolute',
             inset: 0,
             opacity: 0.55,
-            background: 'linear-gradient(to bottom, rgba(26,10,19,0.2) 0%, var(--black) 100%)',
+            background: 'linear-gradient(to bottom, rgba(26,10,19,0.1) 0%, rgba(26,10,19,0.4) 50%, var(--black) 100%)',
             willChange: 'opacity',
           }}
         />
@@ -268,16 +268,16 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom blending gradient to seamlessly merge with the next section's charcoal background */}
+      {/* Bottom blending gradient — tall multi-stop dissolve into next section */}
       <div
         ref={blendRef}
         style={{
           position: 'absolute',
-          bottom: -1, /* -1 to prevent tiny subpixel gaps */
+          bottom: -1,
           left: 0,
           right: 0,
-          height: '25vh',
-          background: 'linear-gradient(to bottom, transparent 0%, var(--black) 100%)',
+          height: '40vh',
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(26,10,19,0.35) 35%, rgba(26,10,19,0.75) 65%, var(--black) 100%)',
           zIndex: 20,
           pointerEvents: 'none',
           opacity: 0,

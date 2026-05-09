@@ -141,7 +141,6 @@ export default function LocationSection() {
         PH4_ZOOM_DUR + PH5_DATA_DUR + PH6_EXPAND_DUR + PH7_END_GAP;
 
       // TOTAL_VH controls how long the pin lasts in viewports height.
-      const vh = window.innerHeight;
       const TOTAL_VH = TOTAL_DUR * 0.7; // Scale duration to manageable scroll height
 
       // ── INITIAL STATES ───────────────────────────────────────────────────────
@@ -190,12 +189,11 @@ export default function LocationSection() {
       // ARCHITECTURE: Pin outerRef itself (trigger === pin) — the standard GSAP
       // pattern that guarantees correct pinSpacing spacer calculation.
       // Pre-compute a concrete pixel value; invalidateOnRefresh recalculates on resize.
-      const scrollDistance = TOTAL_VH * vh;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: outerRef.current,
           start: 'top top',
-          end: `+=${scrollDistance}`,
+          end: () => `+=${TOTAL_VH * window.innerHeight}`,
           scrub: 1.2,
           pin: true,           // pin the trigger itself (outerRef)
           pinSpacing: true,
@@ -337,21 +335,20 @@ export default function LocationSection() {
 
     }, outerRef);
 
-    // CRITICAL: LocationSection's SVG loads asynchronously. When this pin initializes,
-    // it adds massive pinSpacing (padding) to the DOM, pushing ReserveSection down.
-    // We fire TWO refreshes:
-    //   1) at 300ms — initial settle after pin spacer is injected
-    //   2) at 700ms — secondary confirm, catches any slow repaints
-    // This guarantees ReserveSection recalculates its start position AFTER the
-    // pinSpacing spacer is fully committed to the layout.
-    const timer1 = setTimeout(() => { ScrollTrigger.sort(); ScrollTrigger.refresh(); }, 200);
-    const timer2 = setTimeout(() => { ScrollTrigger.sort(); ScrollTrigger.refresh(); }, 600);
-    const timer3 = setTimeout(() => { ScrollTrigger.sort(); ScrollTrigger.refresh(); }, 1200);
+    // After the pin initializes its spacer div, force all downstream sections
+    // (ReserveSection, QuickBookSection) to recalculate their trigger positions.
+    // Double-rAF: first frame = GSAP commits spacer to DOM, second = browser reflows.
+    let raf2;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      });
+    });
 
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
       ctx.revert();
     };
   }, [mapContent]);

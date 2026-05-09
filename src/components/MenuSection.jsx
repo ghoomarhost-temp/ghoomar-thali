@@ -175,7 +175,40 @@ export default function MenuSection() {
       { opacity: 0, scale: 0.82, y: 24 },
       { opacity: 1, scale: 1, y: 0, stagger: 0.055, duration: 0.55, ease: 'power3.out', clearProps: 'all' }
     );
+    // After grid remounts the layout height changes — force ScrollTrigger to
+    // remeasure pin-spacers and trigger positions for all subsequent sections.
+    // Double-rAF: first frame = React commit, second frame = browser reflow complete.
+    let raf2;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
   }, [gridKey, activeFilter]);
+
+  // ── ResizeObserver: sync ScrollTrigger on any section height change ───────
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    let rafId;
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      });
+    });
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   // ── Filter handler ────────────────────────────────────────────────────────
   const handleFilter = useCallback((cat) => {
