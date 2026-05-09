@@ -168,6 +168,24 @@ export default function LocationSection() {
       gsap.set('.left-leader', { x: -15 });
       gsap.set('.right-leader', { x: 15 });
 
+      // ── PRE-ENTRY: Reveal title before pin activates ───────────────────────────
+      // As the user scrolls from CultureSection, the section's 100vh outer div
+      // is entirely transparent. This trigger fades the heading in early so there
+      // is no blank-space gap before the master timeline pin kicks in.
+      gsap.fromTo(titleWrapperRef.current,
+        { opacity: 0, y: 80 },
+        {
+          opacity: 1, y: 0,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: outerRef.current,
+            start: 'top 88%',   // fires as section enters viewport from below
+            end:   'top 8%',    // finishes just before pin grabs at top:top
+            scrub: 0.8,
+          },
+        }
+      );
+
       // ── THE MASTER TIMELINE ──────────────────────────────────────────────────
       // ARCHITECTURE: Pin outerRef itself (trigger === pin) — the standard GSAP
       // pattern that guarantees correct pinSpacing spacer calculation.
@@ -190,10 +208,15 @@ export default function LocationSection() {
 
       // PHASE 0: removed (overlay was transparent — no effect, just wasted scroll)
 
-      // PHASE 1: Title Focus — starts immediately on pin
-      tl.to(titleWrapperRef.current, {
-        opacity: 1, y: 0, duration: PH1_TITLE_DUR * 0.8, ease: 'back.out(1.2)'
-      }, time);
+      // PHASE 1: Hold — title is already visible from pre-entry trigger.
+      // We keep PH1_TITLE_DUR in the budget so Phase 2 timing is unchanged.
+      // fromTo ensures the scrubbed timeline owns the element fully and
+      // doesn't fight with the pre-entry trigger on reverse scroll.
+      tl.fromTo(titleWrapperRef.current,
+        { opacity: 1, y: 0 },
+        { opacity: 1, y: 0, duration: PH1_TITLE_DUR, ease: 'none' },
+        time
+      );
       time += PH1_TITLE_DUR;
 
       // PHASE 2: Layout Transformation + Intro Para pop-in

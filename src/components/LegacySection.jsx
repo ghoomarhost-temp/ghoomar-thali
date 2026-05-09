@@ -103,7 +103,6 @@ export default function LegacySection() {
       const HEADER_H = headerH;
       const outer  = outerRef.current;
       const vh     = window.innerHeight;
-      const totalPx = TOTAL_SEGS * vh;
 
       // Full height a card occupies (from HEADER_H baseline to bottom of viewport)
       const cardH = vh - HEADER_H;
@@ -122,10 +121,11 @@ export default function LegacySection() {
       ScrollTrigger.create({
         trigger:       outer,
         start:         'top top',
-        end:           () => `+=${totalPx}`,
+        end:           () => `+=${TOTAL_SEGS * window.innerHeight}`,
         pin:           containerRef.current,
         anticipatePin: 1,
         pinSpacing:    false,
+        invalidateOnRefresh: true,
       });
 
       // ── Title bloom ─────────────────────────────────────────────────────────
@@ -134,8 +134,9 @@ export default function LegacySection() {
         scrollTrigger: {
           trigger: outer,
           start:   'top 65%',
-          end:     () => `top+=${0.65 * vh} top`,
+          end:     () => `top+=${0.65 * window.innerHeight} top`,
           scrub:   SCRUB,
+          invalidateOnRefresh: true,
         },
       }).to(titleRef.current, { opacity: 1, y: 0, ease: 'power3.out', duration: 1 });
 
@@ -145,8 +146,9 @@ export default function LegacySection() {
         scrollTrigger: {
           trigger: outer,
           start:   'top top',
-          end:     () => `+=${0.8 * vh}`,
+          end:     () => `+=${0.8 * window.innerHeight}`,
           scrub:   SCRUB,
+          invalidateOnRefresh: true,
         },
       }).to(closingRef.current, { opacity: 1, y: 0, ease: 'power3.out', duration: 1 });
 
@@ -164,10 +166,6 @@ export default function LegacySection() {
         gsap.set(card, { y: cardH + 80, scale: 1, transformOrigin: 'top center' });
 
         // ── Target container Y for this card's reveal ─────────────────────────
-        const segStart = (1 + i) * vh;
-        const segEnd   = segStart + vh;
-
-        // ── Target container Y for this card's reveal ─────────────────────────
         const prevContainerY = i === 0 ? 0 : containerYForCard(i - 1);
         const nextContainerY = containerYForCard(i);
 
@@ -182,9 +180,10 @@ export default function LegacySection() {
         gsap.timeline({
           scrollTrigger: {
             trigger: outer,
-            start:   () => `top+=${segStart} top`,
-            end:     () => `top+=${segEnd} top`,
+            start:   () => `top+=${(1 + i) * window.innerHeight} top`,
+            end:     () => `top+=${(2 + i) * window.innerHeight} top`,
             scrub:   SCRUB,
+            invalidateOnRefresh: true,
             // ── Boundary snaps prevent stale transforms on fast reverse scroll ──
             // When this segment is fully entered (forward), snap to its end state.
             onLeave() {
@@ -239,15 +238,18 @@ export default function LegacySection() {
 
       gsap.fromTo(containerRef.current,
         { y: finalContainerY },
-        { 
-          y: finalContainerY - vh, 
-          ease: 'none', 
+        {
+          y: () => finalContainerY - window.innerHeight,
+          ease: 'none',
           immediateRender: false,
           scrollTrigger: {
             trigger: outer,
-            start:   () => `top+=${totalPx - vh} top`,
-            end:     () => `top+=${totalPx} top`,
+            start:   () => `top+=${(TOTAL_SEGS - 1) * window.innerHeight} top`,
+            end:     () => `top+=${TOTAL_SEGS * window.innerHeight} top`,
             scrub:   true,
+            invalidateOnRefresh: true,
+            onLeave:     () => gsap.set(containerRef.current, { autoAlpha: 0 }),
+            onEnterBack: () => gsap.set(containerRef.current, { autoAlpha: 1 }),
           }
         }
       );

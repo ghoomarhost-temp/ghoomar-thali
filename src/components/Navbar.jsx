@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const links = ['Story', 'Menu', 'Culture', 'Locations', 'Reserve'];
+const links = ['Story', 'Legacy', 'Menu', 'Culture', 'Locations'];
 
 export default function Navbar() {
   const navRef = useRef(null);

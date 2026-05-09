@@ -41,27 +41,25 @@ export default function CultureSection() {
     const ctx = gsap.context(() => {
       const panelEls = stickyRef.current.querySelectorAll('.activity-panel');
       const total = activities.length;
-      const vh = window.innerHeight;
-
-      const totalScroll = total * vh * CULTURE_PANEL_OVERLAP + vh * 0.45;
-
       // ── Header bloom + exit ───────────────────────────────────────────────────
       gsap.set(headerRef.current, { opacity: 0, y: 36, filter: 'blur(12px)' });
-      gsap.to(headerRef.current, {
-        opacity: 1, y: 0, filter: 'blur(0px)',
-        duration: 1, ease: 'power3.out',
+      gsap.timeline({
         scrollTrigger: {
-          trigger: outerRef.current, start: 'top 72%',
-          toggleActions: 'play none none reverse',
+          trigger: outerRef.current,
+          start: 'top 72%',
+          end: 'top 18%',
+          scrub: CULTURE_SCRUB,
+          invalidateOnRefresh: true,
         },
-      });
+      }).to(headerRef.current, { opacity: 1, y: 0, filter: 'blur(0px)', ease: 'power3.out', duration: 1 });
       // Header fades as last panel scrolls off
       gsap.timeline({
         scrollTrigger: {
           trigger: outerRef.current,
-          start: () => `top+=${totalScroll - vh * 0.32} top`,
-          end: () => `top+=${totalScroll} top`,
+          start: () => `top+=${(total * CULTURE_PANEL_OVERLAP + 0.13) * window.innerHeight} top`,
+          end: () => `top+=${(total * CULTURE_PANEL_OVERLAP + 0.45) * window.innerHeight} top`,
           scrub: CULTURE_SCRUB,
+          invalidateOnRefresh: true,
         },
       }).to(headerRef.current, { opacity: 0, y: -20, filter: 'blur(10px)', ease: 'power2.in', duration: 1 });
 
@@ -69,24 +67,28 @@ export default function CultureSection() {
       ScrollTrigger.create({
         trigger: outerRef.current,
         start: 'top top',
-        end: () => `+=${totalScroll}`,
+        end: () => `+=${(total * CULTURE_PANEL_OVERLAP + 0.45) * window.innerHeight}`,
         pin: stickyRef.current,
         pinSpacing: false,
+        invalidateOnRefresh: true,
       });
 
       // ── Last-slide exit: translate whole container upward ───────────────────
       // Smoothly slides the pinned container out of view naturally.
       gsap.fromTo(stickyRef.current,
         { y: 0 },
-        { 
-          y: -vh, 
-          ease: 'none', 
+        {
+          y: () => -window.innerHeight,
+          ease: 'none',
           immediateRender: false,
           scrollTrigger: {
             trigger: outerRef.current,
-            start: () => `top+=${totalScroll - vh} top`,
-            end: () => `top+=${totalScroll} top`,
+            start: () => `top+=${(total * CULTURE_PANEL_OVERLAP - 0.55) * window.innerHeight} top`,
+            end: () => `top+=${(total * CULTURE_PANEL_OVERLAP + 0.45) * window.innerHeight} top`,
             scrub: true,
+            invalidateOnRefresh: true,
+            onLeave:     () => gsap.set(stickyRef.current, { autoAlpha: 0 }),
+            onEnterBack: () => gsap.set(stickyRef.current, { autoAlpha: 1 }),
           }
         }
       );
@@ -109,12 +111,8 @@ export default function CultureSection() {
         // Text exits opposite to its entry direction
         const exitX = enterDir === 'right' ? -90 : 90;
 
-        const panelStart = i * vh * CULTURE_PANEL_OVERLAP;
-        const panelEnd = (i + 1) * vh * CULTURE_PANEL_OVERLAP;
         const ENTER_FRAC = 0.36;
         const EXIT_FRAC = 0.68;
-        const enterEnd = panelStart + vh * CULTURE_PANEL_OVERLAP * ENTER_FRAC;
-        const exitStart = panelStart + vh * CULTURE_PANEL_OVERLAP * EXIT_FRAC;
 
         // Split words once to avoid recreating nodes and losing opacity
         let words = null;
@@ -147,9 +145,10 @@ export default function CultureSection() {
           const enter = gsap.timeline({
             scrollTrigger: {
               trigger: outerRef.current,
-              start: () => `top+=${panelStart} top`,
-              end: () => `top+=${enterEnd} top`,
+              start: () => `top+=${i * CULTURE_PANEL_OVERLAP * window.innerHeight} top`,
+              end: () => `top+=${(i + ENTER_FRAC) * CULTURE_PANEL_OVERLAP * window.innerHeight} top`,
               scrub: CULTURE_SCRUB,
+              invalidateOnRefresh: true,
               onEnter: () => gsap.set(panel, { autoAlpha: 1 }),
               onLeaveBack: () => gsap.set(panel, { autoAlpha: 0 }),
             },
@@ -187,9 +186,10 @@ export default function CultureSection() {
           gsap.timeline({
             scrollTrigger: {
               trigger: outerRef.current,
-              start: () => `top+=${exitStart} top`,
-              end: () => `top+=${panelEnd} top`,
+              start: () => `top+=${(i + EXIT_FRAC) * CULTURE_PANEL_OVERLAP * window.innerHeight} top`,
+              end: () => `top+=${(i + 1) * CULTURE_PANEL_OVERLAP * window.innerHeight} top`,
               scrub: CULTURE_SCRUB,
+              invalidateOnRefresh: true,
               onLeave: () => gsap.set(panel, { autoAlpha: 0 }),
               onEnterBack: () => gsap.set(panel, { autoAlpha: 1 }),
             },
@@ -204,19 +204,17 @@ export default function CultureSection() {
         }
 
         // ── Last panel: stays fully visible — section exit handled by container translateY above
-        if (i === total - 1) {
-          // Ensure last panel stays at full opacity while section scrolls off
-          gsap.set(panel, { opacity: 1 });
-        }
+        // autoAlpha: 0 initial + onEnter: autoAlpha: 1 is sufficient; no extra set needed
 
         // ── Parallax depth on performer image ─────────────────────────────────
         gsap.to(imgInner, {
           yPercent: -7, ease: 'none',
           scrollTrigger: {
             trigger: outerRef.current,
-            start: () => `top+=${panelStart} top`,
-            end: () => `top+=${panelEnd} top`,
+            start: () => `top+=${i * CULTURE_PANEL_OVERLAP * window.innerHeight} top`,
+            end: () => `top+=${(i + 1) * CULTURE_PANEL_OVERLAP * window.innerHeight} top`,
             scrub: CULTURE_SCRUB * 1.4,
+            invalidateOnRefresh: true,
           },
         });
       });
@@ -229,8 +227,9 @@ export default function CultureSection() {
           scrollTrigger: {
             trigger: outerRef.current,
             start: 'top top',
-            end: () => `+=${totalScroll}`,
+            end: () => `+=${(total * CULTURE_PANEL_OVERLAP + 0.45) * window.innerHeight}`,
             scrub: CULTURE_SCRUB,
+            invalidateOnRefresh: true,
           },
         });
       }
@@ -274,14 +273,14 @@ export default function CultureSection() {
 
             {/* Warm atmospheric color gradient */}
             <div className="activity-bg float-jellyfish" style={{
-              position: 'absolute', inset: 0,
+              position: 'absolute', inset: '-15%',
               background: 'radial-gradient(ellipse 72% 70% at 70% 52%, rgba(97,14,36,0.65) 0%, transparent 70%)',
               pointerEvents: 'none', zIndex: 1,
             }} />
 
             {/* Screen-blend spotlight */}
             <div className="activity-glow float-jellyfish-reverse" style={{
-              position: 'absolute', inset: 0,
+              position: 'absolute', inset: '-15%',
               background: 'radial-gradient(ellipse 50% 55% at 68% 50%, rgba(142,31,60,0.35) 0%, transparent 65%)',
               mixBlendMode: 'screen',
               pointerEvents: 'none', zIndex: 2,

@@ -12,6 +12,7 @@ import LegacySection from './components/LegacySection';
 import MenuSection from './components/MenuSection';
 import CultureSection from './components/CultureSection';
 import LocationSection from './components/LocationSection';
+import TestimonialsSection from './components/TestimonialsSection';
 import ReserveSection from './components/ReserveSection';
 import QuickBookSection from './components/QuickBookSection';
 import Footer from './components/Footer';
@@ -56,8 +57,11 @@ function App() {
   useEffect(() => {
     if (!loading && lenisRef.current) {
       lenisRef.current.start();
-      ScrollTrigger.sort();
-      ScrollTrigger.refresh(true);
+      // Wait for fonts to settle before measuring pin-spacer heights
+      document.fonts.ready.then(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh(true);
+      });
     }
   }, [loading]);
 
@@ -84,6 +88,7 @@ function App() {
           <MenuSection />
           <CultureSection />
           <LocationSection />
+          <TestimonialsSection />
           <ReserveSection />
           <QuickBookSection />
         </main>
