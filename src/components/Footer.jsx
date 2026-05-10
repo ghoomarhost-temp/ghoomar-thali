@@ -1,20 +1,38 @@
 export default function Footer() {
   return (
     <footer style={{
-      background: 'var(--black)',
-      borderTop: '1px solid rgba(201,168,76,0.12)',
-      padding: '80px 60px 40px',
       position: 'relative',
+      overflow: 'hidden',
+      background: 'linear-gradient(175deg, #110604 0%, #0a0302 40%, #0d0405 70%, #080204 100%)',
+      borderTop: '1px solid rgba(201,168,76,0.18)',
+      padding: '80px 60px 40px',
     }}>
-      {/* Subtle top edge glow */}
+
+      {/* SVG Rajasthani motif at 15% */}
       <div style={{
-        position: 'absolute',
-        top: 0, left: '20%', right: '20%', height: 1,
-        background: 'linear-gradient(90deg, transparent, var(--gold-dark), transparent)',
-        opacity: 0.4,
+        position: 'absolute', inset: 0, zIndex: 0,
+        backgroundImage: 'url(/footer-motif.svg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        backgroundSize: '60%',
+        opacity: 0.10,
+        pointerEvents: 'none',
       }} />
 
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+      {/* Vignette — luxury blackish-brown noir */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: 'radial-gradient(ellipse 68% 62% at 50% 50%, transparent 0%, rgba(6,3,2,0.60) 28%, rgba(3,1,1,0.80) 100%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Gold top edge line */}
+      <div style={{
+        position: 'absolute', top: 0, left: '20%', right: '20%', height: 1, zIndex: 1,
+        background: 'linear-gradient(90deg, transparent, rgba(197,164,109,0.7), transparent)',
+      }} />
+
+      <div style={{ position: 'relative', zIndex: 2, maxWidth: 1240, margin: '0 auto' }}>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 60, marginBottom: 80 }}>
 
@@ -54,11 +72,11 @@ export default function Footer() {
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
-                { label: 'Our Story',        id: 'story' },
-                { label: 'Royal Menu',       id: 'menu' },
+                { label: 'Our Story',          id: 'story' },
+                { label: 'Royal Menu',         id: 'menu' },
                 { label: 'Culture & Folklore', id: 'culture' },
-                { label: 'Locations',        id: 'locations' },
-                { label: 'Reserve',          id: 'reserve' },
+                { label: 'Locations',          id: 'locations' },
+                { label: 'Reserve',            id: 'reserve' },
               ].map(({ label, id }) => (
                 <li key={label}>
                   <a

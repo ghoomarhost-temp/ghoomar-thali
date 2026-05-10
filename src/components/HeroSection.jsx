@@ -13,7 +13,7 @@ const parsedHeroText = (() => {
       const i = currentIndex++;
       // Calculate distance to closest edge to animate simultaneously from both ends
       const distToEdge = Math.min(i, TOTAL_CHARS - 1 - i);
-      return { char, delay: distToEdge * 0.026 }; // slightly increased delay factor so it takes roughly same time
+      return { char, delay: distToEdge * 0.013 }; // halved for 2x speed
     });
     currentIndex++; // account for space
     return { chars, isLast: wIdx === words.length - 1 };

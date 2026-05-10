@@ -4,6 +4,22 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { splitWords } from '../utils';
 import { CULTURE_SCRUB, CULTURE_PANEL_OVERLAP } from '../animation';
 
+// Parse a string into word-wrapped char spans with staggered delay
+// Delay cascades from start so each char blooms in sequence
+function parseDescChars(text) {
+  const words = text.split(' ');
+  let idx = 0;
+  return words.map((word, wIdx) => {
+    const chars = word.split('').map(char => {
+      const delay = idx * 0.009;
+      idx++;
+      return { char, delay };
+    });
+    idx++; // space
+    return { chars, isLast: wIdx === words.length - 1 };
+  });
+}
+
 // enterDir controls which side the scene sweeps in from per performance
 const activities = [
   {
@@ -103,6 +119,8 @@ export default function CultureSection() {
         const tagEl = panel.querySelector('.activity-tag-el');
         const h3El = panel.querySelector('h3');
         const pEl = panel.querySelector('p');
+        // All char spans inside this panel's paragraph
+        const pCharSpans = pEl ? Array.from(pEl.querySelectorAll('.activity-char')) : [];
 
         const { enterDir } = activities[i];
         // Image travels far; text block trails closer behind it
@@ -127,17 +145,17 @@ export default function CultureSection() {
           gsap.set(glowEl, { opacity: 1 });
           gsap.set(numEl, { opacity: 0.05, x: 0 });
           gsap.set(imgInner, { opacity: 1, scale: 1, filter: 'blur(0px)', x: 0, y: 0 });
+          // First panel: fire char animation immediately
+          requestAnimationFrame(() => pCharSpans.forEach(s => s.classList.add('stroke-play')));
         } else {
           gsap.set(panel, { autoAlpha: 0 });
           gsap.set(bgAtmos, { opacity: 0 });
           gsap.set(glowEl, { opacity: 0 });
-          // Ghost number starts slightly offset in entry direction
           gsap.set(numEl, { opacity: 0, x: imgX * 0.15 });
           gsap.set(imgInner, { opacity: 0, scale: 0.90, filter: 'blur(20px)', x: imgX, y: 20 });
           gsap.set(textEl, { opacity: 0, x: txtX });
           if (tagEl) gsap.set(tagEl, { opacity: 0, y: 14 });
           if (words) gsap.set(words, { yPercent: 110, opacity: 0 });
-          if (pEl) gsap.set(pEl, { opacity: 0, y: 22 });
         }
 
         // ── Entrance (panels 1+) ──────────────────────────────────────────────
@@ -149,8 +167,20 @@ export default function CultureSection() {
               end: () => `top+=${(i + ENTER_FRAC) * CULTURE_PANEL_OVERLAP * window.innerHeight} top`,
               scrub: CULTURE_SCRUB,
               invalidateOnRefresh: true,
-              onEnter: () => gsap.set(panel, { autoAlpha: 1 }),
-              onLeaveBack: () => gsap.set(panel, { autoAlpha: 0 }),
+              onEnter: () => {
+                gsap.set(panel, { autoAlpha: 1 });
+                // Fire royal char animation when panel fully enters
+                pCharSpans.forEach(s => s.classList.remove('stroke-play'));
+                requestAnimationFrame(() =>
+                  requestAnimationFrame(() =>
+                    pCharSpans.forEach(s => s.classList.add('stroke-play'))
+                  )
+                );
+              },
+              onLeaveBack: () => {
+                gsap.set(panel, { autoAlpha: 0 });
+                pCharSpans.forEach(s => s.classList.remove('stroke-play'));
+              },
             },
           });
 
@@ -168,17 +198,17 @@ export default function CultureSection() {
               ease: 'expo.out', duration: 0.68
             }, 0);
 
-          // Text block trails behind image — the "drag" offset is the 0.07 delay
+          // Text block trails behind image
           enter.to(textEl, { opacity: 1, x: 0, ease: 'power4.out', duration: 0.62 }, 0.07);
 
-          // Elements cascade up within the text block as it settles
+          // Elements cascade up within the text block
           if (tagEl) enter.to(tagEl, { opacity: 1, y: 0, ease: 'expo.out', duration: 0.38 }, 0.20);
           if (words) {
             enter.fromTo(words,
               { yPercent: 110, opacity: 0 },
               { yPercent: 0, opacity: 1, stagger: 0.03, ease: 'expo.out', duration: 0.50 }, 0.30);
           }
-          if (pEl) enter.to(pEl, { opacity: 1, y: 0, ease: 'power3.out', duration: 0.36 }, 0.50);
+          // p chars animate via CSS on stroke-play class toggle above — no GSAP fade needed
         }
 
         // ── Exit (all panels except last) ─────────────────────────────────────
@@ -254,7 +284,7 @@ export default function CultureSection() {
           ref={headerRef}
           style={{
             position: 'absolute', top: 0, left: 0, right: 0,
-            paddingTop: '78px', textAlign: 'center', zIndex: 30,
+            paddingTop: '120px', textAlign: 'center', zIndex: 30,
             willChange: 'transform, opacity, filter', pointerEvents: 'none',
           }}
         >
@@ -264,7 +294,6 @@ export default function CultureSection() {
           <h2 className="section-title" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4rem)' }}>
             Cultural <em>Performances</em>
           </h2>
-          <div className="gold-divider" style={{ marginTop: 14 }} />
         </div>
 
         {/* ── Activity panels ─────────────────────────────────────────────────── */}
@@ -308,7 +337,7 @@ export default function CultureSection() {
             <div style={{
               position: 'absolute', inset: 0,
               display: 'flex', alignItems: 'center',
-              paddingTop: '18vh',
+              paddingTop: '32vh',
               paddingLeft: '8vw', paddingRight: '6vw', paddingBottom: '4vh',
               gap: '5vw', zIndex: 10,
             }}>
@@ -332,11 +361,24 @@ export default function CultureSection() {
                   {act.title}
                 </h3>
                 <p style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '1.04rem', lineHeight: 1.88,
-                  color: 'var(--ivory-dim)', maxWidth: 360,
-                }}>
-                  {act.desc}
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '1.04rem', lineHeight: 1.88,
+                    color: 'var(--ivory-dim)', maxWidth: 360,
+                  }}>
+                  {parseDescChars(act.desc).map((wordObj, wIdx) => [
+                    <span key={`w-${wIdx}`} style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+                      {wordObj.chars.map((c, cIdx) => (
+                        <span
+                          key={cIdx}
+                          className="quote-char activity-char"
+                          style={{ animationDelay: `${c.delay}s` }}
+                        >
+                          {c.char}
+                        </span>
+                      ))}
+                    </span>,
+                    !wordObj.isLast && <span key={`s-${wIdx}`}> </span>
+                  ])}
                 </p>
               </div>
 

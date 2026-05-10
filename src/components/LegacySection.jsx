@@ -88,7 +88,7 @@ export default function LegacySection() {
     const updateHeaderH = () => {
       if (!titleRef.current) return;
       // Get exact height of the title container naturally sizing itself, plus exact 5px gap
-      const calcH = titleRef.current.getBoundingClientRect().height + 5;
+      const calcH = titleRef.current.getBoundingClientRect().height + 15;
       if (Math.abs(headerH - calcH) > 1) {
         setHeaderH(calcH);
       }
@@ -102,19 +102,14 @@ export default function LegacySection() {
     const ctx = gsap.context(() => {
       const HEADER_H = headerH;
       const outer  = outerRef.current;
-      const vh     = window.innerHeight;
 
-      // Full height a card occupies (from HEADER_H baseline to bottom of viewport)
-      const cardH = vh - HEADER_H;
-
-      // ── Compute the "upshift" amount needed when card[i] is fully revealed ──
-      // Card[i] natural top = HEADER_H + i*(PEEK_H + CARD_GAP)
-      // Card[i] natural bottom = naturalTop + cardH
-      // If bottom > vh → we must shift the container up by (bottom - vh)
+      // containerYForCard reads window.innerHeight live so invalidateOnRefresh
+      // and resize-triggered callbacks always use the current viewport height.
       const containerYForCard = (i) => {
+        const cardH = window.innerHeight - HEADER_H;
         const naturalTop    = HEADER_H + i * (PEEK_H + CARD_GAP);
         const naturalBottom = naturalTop + cardH;
-        return -Math.max(0, naturalBottom - vh);
+        return -Math.max(0, naturalBottom - window.innerHeight);
       };
 
       // ── Master Pin ──────────────────────────────────────────────────────────
@@ -163,11 +158,7 @@ export default function LegacySection() {
 
       cards.forEach((card, i) => {
         // Start each card below the viewport
-        gsap.set(card, { y: cardH + 80, scale: 1, transformOrigin: 'top center' });
-
-        // ── Target container Y for this card's reveal ─────────────────────────
-        const prevContainerY = i === 0 ? 0 : containerYForCard(i - 1);
-        const nextContainerY = containerYForCard(i);
+        gsap.set(card, { y: window.innerHeight - HEADER_H + 80, scale: 1, transformOrigin: 'top center' });
 
         // Helper: snap all cards' scales to the resting state AFTER card[i] is revealed
         const snapScalesToCardI = (revealedUpTo) => {
@@ -187,33 +178,35 @@ export default function LegacySection() {
             // ── Boundary snaps prevent stale transforms on fast reverse scroll ──
             // When this segment is fully entered (forward), snap to its end state.
             onLeave() {
-              gsap.set(containerRef.current, { y: nextContainerY });
+              gsap.set(containerRef.current, { y: containerYForCard(i) });
               snapScalesToCardI(i);
             },
             // When reverse-scrolling back into this segment from below,
             // snap to the end state so GSAP can scrub backward correctly.
             onEnterBack() {
-              gsap.set(containerRef.current, { y: nextContainerY });
+              gsap.set(containerRef.current, { y: containerYForCard(i) });
               snapScalesToCardI(i);
             },
             // When reverse-scrolling OUT of this segment (back to start),
             // snap container to the prev resting y and restore card scales.
             onLeaveBack() {
-              gsap.set(containerRef.current, { y: prevContainerY });
+              gsap.set(containerRef.current, { y: i === 0 ? 0 : containerYForCard(i - 1) });
               // Cards j<i should be at their depth from the previous segment
               for (let j = 0; j < i; j++) {
                 const depth = (i - 1) - j;
                 gsap.set(cards[j], { scale: depthScale(depth) });
               }
               // Card i itself should be fully off-screen below again
-              gsap.set(card, { y: cardH + 80 });
+              gsap.set(card, { y: window.innerHeight - HEADER_H + 80 });
             },
             onUpdate(self) {
               const p = self.progress;
+              const prevY = i === 0 ? 0 : containerYForCard(i - 1);
+              const nextY = containerYForCard(i);
 
               // ── Progressive container upshift ───────────────────────────────
               gsap.set(containerRef.current, {
-                y: prevContainerY + (nextContainerY - prevContainerY) * p,
+                y: prevY + (nextY - prevY) * p,
               });
 
               // ── Update depth scale of all already-revealed cards ────────────
@@ -228,18 +221,16 @@ export default function LegacySection() {
         })
           // Card rises from below into its resting position
           .fromTo(card,
-            { y: cardH + 80 },
+            { y: () => window.innerHeight - HEADER_H + 80 },
             { y: 0, ease: 'power2.out', duration: 1 }
           );
       });
 
       // ── Container slides out when section below enters ───────────────────────
-      const finalContainerY = containerYForCard(NUM_CARDS - 1);
-
       gsap.fromTo(containerRef.current,
-        { y: finalContainerY },
+        { y: () => containerYForCard(NUM_CARDS - 1) },
         {
-          y: () => finalContainerY - window.innerHeight,
+          y: () => containerYForCard(NUM_CARDS - 1) - window.innerHeight,
           ease: 'none',
           immediateRender: false,
           scrollTrigger: {
@@ -295,7 +286,7 @@ export default function LegacySection() {
           ref={titleRef}
           style={{
             position: 'absolute', top: 0, left: 0, right: 0,
-            paddingTop: '80px',
+            paddingTop: '110px',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'flex-start',
             textAlign: 'center', zIndex: 20,

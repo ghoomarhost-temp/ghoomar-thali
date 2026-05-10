@@ -614,7 +614,11 @@ html.lenis { height: auto; }
 }
 .quote-char.stroke-play {
   animation-name: charStrokeFill;
-  animation-duration: 0.28s;
+  animation-duration: 0.14s;
+}
+/* Culture section activity paragraphs — 2× faster than hero */
+.activity-char.stroke-play {
+  animation-duration: 0.14s;
 }
 
 

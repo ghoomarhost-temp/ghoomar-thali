@@ -6,25 +6,25 @@ gsap.registerPlugin(ScrollTrigger);
 
 // coordinates: x = (lon - 68.0) * 27.128, y = (37.5 - lat) * 29.403
 const JOURNEY = [
-  { id: 'amritsar', city: 'Amritsar', region: 'Punjab', tag: 'The Golden City', desc: 'Where faith and flavour converge — the sacred Golden Temple\'s golden ghats inspiring our most revered dishes.', svgX: 186, svgY: 173, zoom: 5 },
-  { id: 'ludhiana', city: 'Ludhiana', region: 'Punjab', tag: 'Heart of Punjab', desc: 'The industrial pulse of Punjab, where royal feasts match the city\'s legendary spirit and appetite.', svgX: 213, svgY: 194, zoom: 5 },
-  { id: 'mohali', city: 'Mohali', region: 'Chandigarh', tag: 'The Twin City', desc: 'India\'s most planned city\'s twin — where modern ambition is nourished by ancestral dining traditions.', svgX: 238, svgY: 199, zoom: 5 },
-  { id: 'pitampura', city: 'Pitampura', region: 'Delhi', tag: 'Capital\'s North', desc: 'A verdant northern enclave of the capital, serving Rajputana royalty to Delhi\'s historic heartland.', svgX: 248, svgY: 258, zoom: 9 },
-  { id: 'cp', city: 'Connaught Place', region: 'Delhi', tag: 'The Imperial Core', desc: 'At the beating heart of India\'s capital — our most storied and most visited royal outpost.', svgX: 250, svgY: 261, zoom: 9 },
-  { id: 'vasantkunj', city: 'Vasant Kunj', region: 'Delhi', tag: 'The Southern Court', desc: 'A tranquil southern enclave of the capital — understated grandeur nestled in a forest-lined setting.', svgX: 248, svgY: 264, zoom: 9 },
-  { id: 'gurugram', city: 'Gurugram', region: 'Delhi NCR', tag: 'The Millennium City', desc: 'Where the corporate world\'s titans seek the soul of Rajasthan after the day\'s long conquest.', svgX: 245, svgY: 266, zoom: 9 },
-  { id: 'noida', city: 'Noida', region: 'Delhi NCR', tag: 'Eastern Gateway', desc: 'Across the Yamuna — a thriving satellite city with an appetite for the truly extraordinary.', svgX: 253, svgY: 263, zoom: 9 },
-  { id: 'ghaziabad', city: 'Ghaziabad', region: 'Delhi NCR', tag: 'Gateway to the Doab', desc: 'Ancient crossroads of western UP — where the road to Agra begins and royal flavours linger longest.', svgX: 256, svgY: 260, zoom: 8 },
-  { id: 'agra', city: 'Agra', region: 'Uttar Pradesh', tag: 'City of the Taj', desc: 'In the shadow of immortal love and marble — we serve flavours carved with equal devotion and precision.', svgX: 271, svgY: 303, zoom: 4.5 },
-  { id: 'kanpur', city: 'Kanpur', region: 'Uttar Pradesh', tag: 'Heart of the Doab', desc: 'The great industrial heart of Uttar Pradesh where our royal table feels most grandly at home.', svgX: 335, svgY: 325, zoom: 4 },
-  { id: 'patna', city: 'Patna', region: 'Bihar', tag: 'Ancient Pataliputra', desc: 'On the sacred Ganges, the ancient capital that once ruled all of the subcontinent — now savours our heritage.', svgX: 465, svgY: 350, zoom: 3.8 },
-  { id: 'guwahati', city: 'Guwahati', region: 'Assam', tag: 'Gateway to the East', desc: 'Where the Brahmaputra flows wide and wild — a taste of Rajputana in the land of the seven sisters.', svgX: 644, svgY: 333, zoom: 3.2 },
-  { id: 'bhopal', city: 'Bhopal', region: 'Madhya Pradesh', tag: 'City of Lakes', desc: 'Draped in twin lakes and Nawabi heritage — our Rajputana court finds its deepest spiritual cousin here.', svgX: 255, svgY: 419, zoom: 4.2 },
-  { id: 'vadodara', city: 'Vadodara', region: 'Gujarat', tag: 'The Cultural Capital', desc: 'The Maratha royal city that opens its arms to Rajputana hospitality with unmatched grace and warmth.', svgX: 141, svgY: 447, zoom: 4.5 },
-  { id: 'pune', city: 'Pune', region: 'Maharashtra', tag: 'Oxford of the East', desc: 'Where scholars and soldiers have dined for centuries — a new royal court now firmly established.', svgX: 159, svgY: 558, zoom: 4.2 },
-  { id: 'goa', city: 'Goa', region: 'Goa', tag: 'Pearl of the Orient', desc: 'Sun-kissed and gold-washed — our coastal outpost where the spirit of Rajputana meets the Arabian Sea.', svgX: 155, svgY: 660, zoom: 4.8 },
-  { id: 'mangalore', city: 'Mangalore', region: 'Karnataka', tag: 'Port of Perfumes', desc: 'Spices from across India converge at this fragrant coast — a fitting home for our spice-mastered heritage.', svgX: 186, svgY: 723, zoom: 4.8 },
-  { id: 'jaipur', city: 'Jaipur', region: 'Rajasthan', tag: 'The Origin — The Pink City', desc: 'Here, on the rose-red streets of the Pink City, it all began. Every feast across the empire traces its soul back to this royal kitchen.', svgX: 211, svgY: 311, zoom: 4.5, primary: true },
+  { id: 'amritsar', city: 'Amritsar', region: 'Punjab', tag: 'The Golden City', desc: 'In a city where langar feeds the faithful daily, our Rajputana thali brings its own form of devotion. Twenty-four dishes, served unlimited, in the same spirit of abundance that has always defined this sacred land.', svgX: 186, svgY: 173, zoom: 5 },
+  { id: 'ludhiana', city: 'Ludhiana', region: 'Punjab', tag: 'Heart of Punjab', desc: 'Punjab\'s great appetite deserves a table worthy of its boldness. Our Ludhiana kitchen serves the full ceremony of the Rajasthani thali to a city that has always celebrated eating as an act of joy and generosity.', svgX: 213, svgY: 194, zoom: 5 },
+  { id: 'mohali', city: 'Mohali', region: 'Chandigarh', tag: 'The Twin City', desc: 'Mohali\'s modern sensibility meets Rajputana tradition at our table. Guests from across Chandigarh come to sit with a thali of twenty-four courses, each one a quiet reminder of what unhurried dining truly feels like.', svgX: 238, svgY: 199, zoom: 5 },
+  { id: 'pitampura', city: 'Pitampura', region: 'Delhi', tag: 'Capital\'s North', desc: 'In the residential heart of North Delhi, we have built a table where families return again and again. The unlimited Rajasthani thali here is not just a meal; it is the ritual that brings generations together under one roof.', svgX: 248, svgY: 258, zoom: 9 },
+  { id: 'cp', city: 'Connaught Place', region: 'Delhi', tag: 'The Imperial Core', desc: 'Our Connaught Place kitchen sits at the centre of the capital, serving the full weight of Rajputana cuisine to those who lead and those who seek. It is our most visited table, and perhaps our proudest one.', svgX: 250, svgY: 261, zoom: 9 },
+  { id: 'vasantkunj', city: 'Vasant Kunj', region: 'Delhi', tag: 'The Southern Court', desc: 'Nestled at the edge of Delhi\'s Aravalli forest, our Vasant Kunj table offers the Ghoomar thali experience in a setting of genuine calm. Here, the food arrives the way it should: slowly, generously, and with great care.', svgX: 248, svgY: 264, zoom: 9 },
+  { id: 'gurugram', city: 'Gurugram', region: 'Delhi NCR', tag: 'The Millennium City', desc: 'Our grandest court. Ghoomar Village in Gurugram spans 25,000 square feet of living Rajasthani culture. The thali is only the beginning. Folk musicians, open courtyards and heritage craft make every dinner a full evening of celebration.', svgX: 245, svgY: 266, zoom: 9 },
+  { id: 'noida', city: 'Noida', region: 'Delhi NCR', tag: 'Eastern Gateway', desc: 'East of the Yamuna, our Noida kitchen draws families seeking the full Rajasthani thali experience. Twenty-four dishes served with the patience that fast food has long forgotten, in a city still discovering what a great meal can feel like.', svgX: 253, svgY: 263, zoom: 9 },
+  { id: 'ghaziabad', city: 'Ghaziabad', region: 'Delhi NCR', tag: 'Gateway to the Doab', desc: 'On the ancient trade road where Rajput and Mughal histories once crossed, our Ghaziabad table serves a thali that carries the richness of both. Rich dals, stone-ground spices and ghee-touched rotis made fresh for every guest.', svgX: 256, svgY: 260, zoom: 8 },
+  { id: 'agra', city: 'Agra', region: 'Uttar Pradesh', tag: 'City of the Taj', desc: 'In a city where emperors built for eternity, we serve a meal with equal devotion. Our Agra thali is crafted with the same precision that defines this city, each of its twenty-four dishes a small act of lasting craft and care.', svgX: 271, svgY: 303, zoom: 4.5 },
+  { id: 'kanpur', city: 'Kanpur', region: 'Uttar Pradesh', tag: 'Heart of the Doab', desc: 'Kanpur has always known how to feast. Our Rajasthani thali here honours that tradition: rich Marwari curries, dal baati churma, and the full spread of a royal kitchen served unlimited to a city with a long memory for good food.', svgX: 335, svgY: 325, zoom: 4 },
+  { id: 'patna', city: 'Patna', region: 'Bihar', tag: 'Ancient Pataliputra', desc: 'On the banks of the Ganga where Chandragupta once ruled, our Patna kitchen brings a Rajasthani feast to a city of deep culinary pride. Two great traditions of the north share the same table, and guests leave with both in their memory.', svgX: 465, svgY: 350, zoom: 3.8 },
+  { id: 'guwahati', city: 'Guwahati', region: 'Assam', tag: 'Gateway to the East', desc: 'Our furthest reach, and perhaps our most warmly welcomed. In Guwahati, where the Brahmaputra runs wide, our Rajputana thali arrived as something entirely new. It is now the table that the northeast\'s food lovers travel to find.', svgX: 644, svgY: 333, zoom: 3.2 },
+  { id: 'bhopal', city: 'Bhopal', region: 'Madhya Pradesh', tag: 'City of Lakes', desc: 'Between two shimmering lakes and beneath Nawabi domes, our Bhopal table offers a Rajputana thali to a city that has always valued refined dining. The depth of a slow-cooked dal is not lost on those who have grown up beside royal water.', svgX: 255, svgY: 419, zoom: 4.2 },
+  { id: 'vadodara', city: 'Vadodara', region: 'Gujarat', tag: 'The Cultural Capital', desc: 'Maharaja Sayajirao\'s city has long had the finest taste in India. Our Vadodara kitchen was welcomed here as a natural equal. The Rajasthani thali, with its parade of seasonal dishes and sweet endings, feels perfectly and permanently at home.', svgX: 141, svgY: 447, zoom: 4.5 },
+  { id: 'pune', city: 'Pune', region: 'Maharashtra', tag: 'Oxford of the East', desc: 'Where Peshwa courts once gathered the finest minds, our Pune kitchen now gathers those who still believe that a meal deserves full attention. Twenty-four dishes made from memory and mastery, for a city that truly understands craft.', svgX: 159, svgY: 558, zoom: 4.2 },
+  { id: 'goa', city: 'Goa', region: 'Goa', tag: 'Pearl of the Orient', desc: 'Our Goa table is where the ceremony of Rajputana meets the ease of the coast. For guests who come here chasing sea and sunlight, the royal thali offers a different discovery: the quieter pleasure of food made with patience and pride.', svgX: 155, svgY: 660, zoom: 4.8 },
+  { id: 'mangalore', city: 'Mangalore', region: 'Karnataka', tag: 'Port of Perfumes', desc: 'In a city shaped by centuries of the spice trade, our kitchen was received with an expert eye. Mangalore\'s cooks and food lovers recognised the quality in every dish and the care in every preparation, and they welcomed us warmly for it.', svgX: 186, svgY: 723, zoom: 4.8 },
+  { id: 'jaipur', city: 'Jaipur', region: 'Rajasthan', tag: 'The Origin, The Pink City', desc: 'Every dish served at every Ghoomar table across India traces its soul back here, to the ancestral kitchen of the Pink City. Jaipur is not simply where we began. It is the reason every meal we serve carries the taste of something real and lasting.', svgX: 211, svgY: 311, zoom: 4.5, primary: true },
 ];
 
 const SVG_W = 786.7, SVG_H = 867.4;
@@ -54,9 +54,9 @@ function trailPath(a, b) {
 
 // Pin shape: tip at origin (0,0), head extends upward by sz*2.4
 const pinPath = (sz) =>
-  `M 0,0 C ${-sz*0.4},${-sz*0.9} ${-sz},${-sz*1.7} ${-sz},${-sz*2.4}` +
-  ` A ${sz},${sz} 0 1,1 ${sz},${-sz*2.4}` +
-  ` C ${sz},${-sz*1.7} ${sz*0.4},${-sz*0.9} 0,0 Z`;
+  `M 0,0 C ${-sz * 0.4},${-sz * 0.9} ${-sz},${-sz * 1.7} ${-sz},${-sz * 2.4}` +
+  ` A ${sz},${sz} 0 1,1 ${sz},${-sz * 2.4}` +
+  ` C ${sz},${-sz * 1.7} ${sz * 0.4},${-sz * 0.9} 0,0 Z`;
 
 const sortedByX = [...JOURNEY].sort((a, b) => a.svgX - b.svgX);
 const midIndex = Math.ceil(sortedByX.length / 2);
@@ -122,11 +122,13 @@ export default function LocationSection() {
       // ── MASTER TIMELINE SETUP ────────────────────────────────────────────────
       // Assign abstract duration units. 1 unit roughly = 1vh of visual scrolling.
       const PH0_ENTRY_DUR = 0;   // removed: overlay was transparent, wasted scroll
-      const PH1_TITLE_DUR = 1.0;
-      const PH2_LAYOUT_DUR = 1.5;
+      // PH1: Title drifts upward into screen centre after rising from bottom
+      const PH1_TITLE_DUR = 0.5;
+      // PH2: Snappy layout transition — title sweeps left, map zooms in from right
+      const PH2_LAYOUT_DUR = 0.9;
 
       // Per-location: map moves immediately, text crossfades (no dead time)
-      const STEP_MAP_DUR  = 1.2;
+      const STEP_MAP_DUR = 1.2;
       const STEP_HOLD_DUR = 0.9;  // longer hold so text is readable
       // Text crossfades with map move — no sequential text dur in timeline budget
       const STEP_LOOP_DUR = STEP_MAP_DUR + STEP_HOLD_DUR; // 2.1 per location
@@ -134,7 +136,7 @@ export default function LocationSection() {
       const PH4_ZOOM_DUR = 1.5;
       const PH5_DATA_DUR = 1.5;
       const PH6_EXPAND_DUR = 1.5;
-      const PH7_END_GAP  = 0.5; // Minimal hold — just enough to absorb the final view
+      const PH7_END_GAP = 0.5; // Minimal hold — just enough to absorb the final view
 
       const TOTAL_DUR = PH1_TITLE_DUR + PH2_LAYOUT_DUR +
         (JOURNEY.length * STEP_LOOP_DUR) +
@@ -147,13 +149,17 @@ export default function LocationSection() {
       gsap.set('.loc-overlay', { opacity: 1 });
 
       gsap.set(titleWrapperRef.current, {
-        xPercent: -50, yPercent: 0, left: '50%', top: '40vh', scale: 1.2, opacity: 0, y: 150, textAlign: 'center', transformOrigin: 'left top'
+        xPercent: -50, yPercent: 0, left: '50%', top: '52vh',
+        scale: 1.1, opacity: 0, y: 200, textAlign: 'center', transformOrigin: 'left top'
       });
 
+      // Map: starts far right, zoomed in — will zoom-out into place during PH2
+      gsap.set(mapPanelRef.current, { opacity: 0, x: 500, scale: 1.6, filter: 'blur(25px)' });
+
       gsap.set(leftContentRef.current, { opacity: 0 });
-      gsap.set(mapPanelRef.current, { opacity: 0, x: 300, scale: 0.7, filter: 'blur(15px)' });
       // Intro para: starts off-screen right, hidden
       gsap.set(introRef.current, { opacity: 0, x: 70 });
+
 
       gsap.set(svgRef.current, { attr: { viewBox: FULL_VB } });
       gsap.set('.marker-group .pulse-ring', { opacity: 0, display: 'none' });
@@ -167,20 +173,19 @@ export default function LocationSection() {
       gsap.set('.left-leader', { x: -15 });
       gsap.set('.right-leader', { x: 15 });
 
-      // ── PRE-ENTRY: Reveal title before pin activates ───────────────────────────
-      // As the user scrolls from CultureSection, the section's 100vh outer div
-      // is entirely transparent. This trigger fades the heading in early so there
-      // is no blank-space gap before the master timeline pin kicks in.
+      // ── PRE-ENTRY: Title rises upward as section scrolls into view ────────────
+      // Start early (110%) so title is already rising while section is still below
+      // the fold — eliminates the "empty section" dead zone on first scroll.
       gsap.fromTo(titleWrapperRef.current,
-        { opacity: 0, y: 80 },
+        { opacity: 0, y: 200 },
         {
           opacity: 1, y: 0,
-          ease: 'power2.out',
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: outerRef.current,
-            start: 'top 88%',   // fires as section enters viewport from below
-            end:   'top 8%',    // finishes just before pin grabs at top:top
-            scrub: 0.8,
+            start: 'top 110%',  // begins rising while section is still below viewport
+            end: 'top 40%',   // completes well before pin grabs at top:top
+            scrub: 0.6,
           },
         }
       );
@@ -206,30 +211,56 @@ export default function LocationSection() {
 
       // PHASE 0: removed (overlay was transparent — no effect, just wasted scroll)
 
-      // PHASE 1: Hold — title is already visible from pre-entry trigger.
-      // We keep PH1_TITLE_DUR in the budget so Phase 2 timing is unchanged.
-      // fromTo ensures the scrubbed timeline owns the element fully and
-      // doesn't fight with the pre-entry trigger on reverse scroll.
-      tl.fromTo(titleWrapperRef.current,
-        { opacity: 1, y: 0 },
-        { opacity: 1, y: 0, duration: PH1_TITLE_DUR, ease: 'none' },
+      // PHASE 1: Title drifts up to visual centre — the "settle in middle" beat
+      // Pre-entry lands it at top:52vh (bottom-ish center); here it floats up to
+      // top:38vh so it reads as clearly centre-screen before sweeping left.
+      tl.to(titleWrapperRef.current,
+        { top: '38vh', ease: 'power2.out', duration: PH1_TITLE_DUR },
         time
       );
       time += PH1_TITLE_DUR;
 
-      // PHASE 2: Layout Transformation + Intro Para pop-in
+      // PHASE 2: Title sweeps left + Map zooms out from right simultaneously
       tl.to(titleWrapperRef.current, {
-        left: '7vw', top: '15vh', xPercent: 0, yPercent: 0, scale: 0.85,
-        duration: PH2_LAYOUT_DUR, ease: 'power2.inOut'
+        left: '7vw', top: '17vh', xPercent: 0, yPercent: 0, scale: 0.85,
+        duration: PH2_LAYOUT_DUR, ease: 'power3.inOut'
       }, time);
-      tl.to(leftContentRef.current, { opacity: 1, duration: PH2_LAYOUT_DUR * 0.8, ease: 'power2.out' }, time + PH2_LAYOUT_DUR * 0.2);
+      
+      // Smoothly left-align "OUR EMPIRE"
+      tl.to('.section-tag', {
+        x: () => {
+          const wrapper = titleWrapperRef.current;
+          const tag = wrapper.querySelector('.section-tag');
+          if (!wrapper || !tag) return 0;
+          return -(wrapper.offsetWidth / 2 - tag.offsetWidth / 2);
+        },
+        duration: PH2_LAYOUT_DUR, ease: 'power3.inOut'
+      }, time);
+
+      // Smoothly glide "Across the Nation" underneath "A Royal Table,"
+      // Use different easing for x and y to create a curved path that avoids overlap!
+      tl.to('.part-2', {
+        x: () => {
+          const p1 = titleWrapperRef.current.querySelector('.part-1');
+          return p1 ? -(p1.offsetWidth + 14) : -200;
+        },
+        duration: PH2_LAYOUT_DUR, ease: 'power3.inOut'
+      }, time);
+      
+      tl.to('.part-2', {
+        y: '100%',
+        duration: PH2_LAYOUT_DUR, ease: 'power3.out' // Drops quickly to clear Part 1
+      }, time);
+      tl.to(leftContentRef.current, { opacity: 1, duration: PH2_LAYOUT_DUR * 0.7, ease: 'power2.out' }, time + PH2_LAYOUT_DUR * 0.3);
+      // Map: zoom-out from right — starts large+right, lands at natural size from left
       tl.to(mapPanelRef.current, {
-        opacity: 1, x: 0, scale: 1, filter: 'blur(0px)', duration: PH2_LAYOUT_DUR, ease: 'back.out(1.2)'
+        opacity: 1, x: 0, scale: 1, filter: 'blur(0px)',
+        duration: PH2_LAYOUT_DUR, ease: 'power3.out'
       }, time);
-      // Intro para slides in from right as layout settles
+      // Intro para slides in as layout settles
       tl.to(introRef.current, {
-        opacity: 1, x: 0, duration: PH2_LAYOUT_DUR * 0.6, ease: 'power3.out'
-      }, time + PH2_LAYOUT_DUR * 0.4);
+        opacity: 1, x: 0, duration: PH2_LAYOUT_DUR * 0.55, ease: 'power3.out'
+      }, time + PH2_LAYOUT_DUR * 0.45);
       time += PH2_LAYOUT_DUR;
 
       // PHASE 3: Location Journey — crossfade text (no dead time)
@@ -301,9 +332,9 @@ export default function LocationSection() {
       // Reveal ALL pulses and markers for a grand finale
       tl.set(['.pulse-ring', '.pulse-ring-primary'], { display: 'block' }, time + PH4_ZOOM_DUR * 0.4);
       tl.to(['.pulse-ring', '.pulse-ring-primary'], { opacity: 1, duration: PH4_ZOOM_DUR * 0.6 }, time + PH4_ZOOM_DUR * 0.4);
-      tl.to('.solid-dot', { 
-        opacity: 1, 
-        duration: PH4_ZOOM_DUR * 0.6, 
+      tl.to('.solid-dot', {
+        opacity: 1,
+        duration: PH4_ZOOM_DUR * 0.6,
         stagger: { each: 0.02, from: 'center' },
         ease: 'power2.out'
       }, time + PH4_ZOOM_DUR * 0.4);
@@ -368,21 +399,29 @@ export default function LocationSection() {
           ref={titleWrapperRef}
           style={{
             position: 'absolute', zIndex: 15, pointerEvents: 'none',
-            width: 'max-content', maxWidth: '44vw',
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
             willChange: 'transform, opacity, left, top',
           }}
         >
-          <span className="section-tag" style={{ display: 'block', marginBottom: 10, letterSpacing: '0.5em', textAlign: 'inherit' }}>
-            Our Empire
+          <span className="section-tag" style={{ letterSpacing: '0.5em', textTransform: 'uppercase', marginBottom: 12 }}>
+            OUR EMPIRE
           </span>
-          <h2 style={{
-            fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 400,
-            fontSize: 'clamp(2.6rem, 4.2vw, 4.4rem)',
-            color: 'var(--ivory)', lineHeight: 1.05, marginBottom: 0,
-            textAlign: 'inherit',
-          }}>
-            A Kingdom Across <em style={{ color: 'var(--gold)' }}>India</em>
-          </h2>
+          <div className="loc-title-h2-container" style={{ display: 'flex', gap: '14px' }}>
+            <h2 className="part-1" style={{
+              fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 400,
+              fontSize: 'clamp(2.6rem, 4.2vw, 4.4rem)',
+              color: 'var(--ivory)', lineHeight: 1.05, marginBottom: 0, whiteSpace: 'nowrap'
+            }}>
+              A Royal Table,
+            </h2>
+            <h2 className="part-2" style={{
+              fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 400,
+              fontSize: 'clamp(2.6rem, 4.2vw, 4.4rem)',
+              color: 'var(--ivory)', lineHeight: 1.05, marginBottom: 0, whiteSpace: 'nowrap'
+            }}>
+              Across <em style={{ color: 'var(--gold)' }}>the Nation</em>
+            </h2>
+          </div>
         </div>
 
         {/* ── LEFT PANEL (30%) ──────────────────────────────────────────────────── */}
@@ -397,8 +436,7 @@ export default function LocationSection() {
           {/* Subtle text-legibility gradient — softer than before, no dark blob */}
           <div style={{ position: 'absolute', inset: 0, zIndex: -1, background: 'linear-gradient(to right, rgba(14,6,12,0.82) 40%, rgba(14,6,12,0.45) 65%, transparent 100%)' }} />
 
-          <div style={{ position: 'relative', marginTop: '12vh' }}>
-            <div className="gold-divider-left" style={{ marginBottom: 40 }} />
+          <div style={{ position: 'relative', marginTop: '28vh' }}>
 
             <div style={{ position: 'relative', minHeight: 280 }}>
               {JOURNEY.map((loc) => (
@@ -413,11 +451,10 @@ export default function LocationSection() {
                   }}>
                     {loc.city}
                   </h3>
-                  <div style={{ width: 48, height: 1, background: 'linear-gradient(90deg, var(--gold), transparent)', marginBottom: 18 }} />
                   <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.98rem', lineHeight: 1.82, color: 'var(--ivory-dim)', maxWidth: 360, marginBottom: 24 }}>
                     {loc.desc}
                   </p>
-                  
+
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
                       <div style={{ width: 6, height: 6, borderRadius: '50%', background: loc.primary ? 'var(--gold)' : 'var(--maroon)', flexShrink: 0 }} />
@@ -443,11 +480,11 @@ export default function LocationSection() {
                   color: 'var(--ivory-dim)', maxWidth: 360,
                   marginBottom: 24,
                 }}>
-                  From the rose-red streets of Jaipur, a culinary empire was born — now stretching across 
-                  <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>19 royal outposts</em>
-                   in 11 states of India, united by the soul of Rajputana hospitality.
+                  What began in the rose-red lanes of Jaipur has quietly grown into something far greater.
+                  A living heritage, now carried across{' '}
+                  <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>19 royal courts</em>
+                  {' '}across 11 states � each one a new chapter of the same ancient story.
                 </p>
-                <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, var(--gold), transparent)' }} />
               </div>
 
               {/* FINAL DATA REVEAL */}
@@ -456,7 +493,7 @@ export default function LocationSection() {
                 style={{ position: 'absolute', top: 0, left: 0, right: 0, willChange: 'transform, opacity' }}
               >
                 <p style={{ fontFamily: 'var(--font-body)', fontSize: '1.05rem', lineHeight: 1.7, color: 'var(--ivory-dim)', maxWidth: 380, marginBottom: 48 }}>
-                  With over 19 majestic outposts bridging these historic landscapes, Ghoomar Village weaves a tapestry of diverse cultures tightly together, bound by our shared reverence for the royal feast.
+                  Every city holds a piece of a journey that began with one kitchen, one vision — to carry the warmth of Rajputana to every corner of India.
                 </p>
                 <div style={{ display: 'flex', gap: 48 }}>
                   <div>

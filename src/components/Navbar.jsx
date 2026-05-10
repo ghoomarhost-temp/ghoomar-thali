@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const links = ['Story', 'Legacy', 'Menu', 'Culture', 'Locations'];
+const links = [
+  { label: 'Story',        id: 'story' },
+  { label: 'Legacy',       id: 'legacy' },
+  { label: 'Menu',         id: 'menu' },
+  { label: 'Culture',      id: 'culture' },
+  { label: 'Locations',    id: 'locations' },
+  { label: 'Testimonials', id: 'testimonials' },
+];
 
 export default function Navbar() {
   const navRef = useRef(null);
@@ -22,9 +29,8 @@ export default function Navbar() {
   }, []);
 
   const scrollTo = (id) => {
-    const el = document.getElementById(id.toLowerCase());
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
     setMenuOpen(false);
+    window.dispatchEvent(new CustomEvent('nav:scrollTo', { detail: { id } }));
   };
 
   return (
@@ -36,8 +42,8 @@ export default function Navbar() {
 
         <ul className="nav-links">
           {links.map(link => (
-            <li key={link}>
-              <a href={`#${link.toLowerCase()}`} onClick={e => { e.preventDefault(); scrollTo(link); }}>{link}</a>
+            <li key={link.id}>
+              <a href={`#${link.id}`} onClick={e => { e.preventDefault(); scrollTo(link.id); }}>{link.label}</a>
             </li>
           ))}
         </ul>
@@ -68,10 +74,10 @@ export default function Navbar() {
             style={{ position: 'absolute', top: 24, right: 32, background: 'none', border: 'none', color: 'var(--gold)', fontSize: 24, cursor: 'pointer' }}
           >✕</button>
           {links.map(link => (
-            <button key={link} onClick={() => scrollTo(link)} style={{
+            <button key={link.id} onClick={() => scrollTo(link.id)} style={{
               background: 'none', border: 'none', fontFamily: 'var(--font-royal)',
               fontSize: '1.4rem', letterSpacing: '0.3em', color: 'var(--gold)', cursor: 'pointer', textTransform: 'uppercase',
-            }}>{link}</button>
+            }}>{link.label}</button>
           ))}
         </div>
       )}

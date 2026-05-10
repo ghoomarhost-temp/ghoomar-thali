@@ -44,39 +44,15 @@ export default function QuickBookSection() {
     >
       {/* ── Header ── */}
       <div style={{ textAlign: 'center', marginBottom: 60 }}>
-        <div style={{ 
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 16 
-        }}>
-          <div style={{ width: 24, height: 1, background: 'linear-gradient(90deg, transparent, var(--gold))' }} />
-          <div style={{ width: 4, height: 4, transform: 'rotate(45deg)', border: '1px solid var(--gold)' }} />
-          <span style={{ 
-            fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'var(--gold)', 
-            letterSpacing: '0.4em', textTransform: 'uppercase' 
-          }}>
-            Skip The Wait
-          </span>
-          <div style={{ width: 4, height: 4, transform: 'rotate(45deg)', border: '1px solid var(--gold)' }} />
-          <div style={{ width: 24, height: 1, background: 'linear-gradient(90deg, var(--gold), transparent)' }} />
-        </div>
-
-        <h2 style={{
-          fontFamily: 'var(--font-serif)', fontWeight: 300,
-          fontSize: 'clamp(2.4rem, 4vw, 3.6rem)', color: 'var(--ivory)',
-          marginBottom: 16
-        }}>
-          Book <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Dine-in</em> Instantly
+        <span className="section-tag" style={{ display: 'block', marginBottom: 10 }}>
+          Skip The Wait
+        </span>
+        <h2 className="section-title">
+          Book <em>Dine-in</em> Instantly
         </h2>
-
-        {/* Ornate Divider underneath title */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 24, opacity: 0.6 }}>
-          <div style={{ width: 60, height: 1, background: 'linear-gradient(90deg, transparent, var(--gold))' }} />
-          <span style={{ color: 'var(--gold)', fontSize: '0.8rem' }}>✦</span>
-          <div style={{ width: 60, height: 1, background: 'linear-gradient(90deg, var(--gold), transparent)' }} />
-        </div>
-
         <p style={{
           fontFamily: 'var(--font-body)', fontSize: '1.05rem', color: 'var(--ivory-dim)',
-          maxWidth: 500, margin: '0 auto'
+          maxWidth: 500, margin: '16px auto 0'
         }}>
           Reserve your table in seconds on your favorite platforms.
         </p>
