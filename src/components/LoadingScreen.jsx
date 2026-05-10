@@ -37,14 +37,7 @@ export default function LoadingScreen({ onComplete }) {
     const wrapper = containerRef.current;
 
     // STEP 1 - PRELOADER
-    // Mandala slow smooth rotation (linear, no jitter)
-    gsap.to(mandala, {
-      rotation: 360,
-      duration: 10,
-      ease: 'none',
-      repeat: -1,
-      force3D: true
-    });
+    // Mandala now uses pure CSS rotation on its inner <img> to prevent JS main-thread lag
 
     // 1. Initial fade-in of the mandala and side texts
     tl.to([mandala, leftTextRef.current, rightTextRef.current], {
@@ -237,7 +230,22 @@ export default function LoadingScreen({ onComplete }) {
             backfaceVisibility: 'hidden'
           }}
         >
-          <img src={mandalaSvg} alt="Mandala Preloader" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          <style>
+            {`
+              @keyframes preloaderSpin {
+                to { transform: rotate(360deg); }
+              }
+              .mandala-spin {
+                animation: preloaderSpin 10s linear infinite;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                transform-origin: center center;
+                will-change: transform;
+              }
+            `}
+          </style>
+          <img src={mandalaSvg} alt="Mandala Preloader" className="mandala-spin" />
         </div>
 
         {/* Right Text: Cycling Words */}
