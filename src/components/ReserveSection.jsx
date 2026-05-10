@@ -8,7 +8,7 @@ const S2_DUR = 1.4;   // Stage 2: card rises
 const S3_DUR = 1.6;   // Stage 3: card flips
 const HOLD   = 2.0;   // Hold at end (persist final state)
 const TOTAL_DUR = S1_DUR + S2_DUR + S3_DUR + HOLD; // 6.0 units
-const TOTAL_VH  = TOTAL_DUR * 0.75;
+const TOTAL_VH  = TOTAL_DUR * 0.45;
 
 export default function ReserveSection() {
   const outerRef     = useRef(null);

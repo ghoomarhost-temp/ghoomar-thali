@@ -158,11 +158,12 @@ function App() {
         snapAll(window.scrollY);
         
         // THE MICRO-SCROLL FIX:
-        // Immediately trigger a smooth downward movement (30px for legacy, 5px else).
-        // This forces a natural GSAP scrub, effortlessly resolving any 
-        // overlapping or frozen mid-transition states caused by teleporting.
-        const scrollOffset = e.detail.id === 'legacy' ? 30 : 5;
-        lenis.scrollTo(targetY + scrollOffset, { duration: 0.1 });
+        // Immediately trigger a smooth downward movement. For 'legacy', we scroll 
+        // 350px to perfectly reveal the promise text ("Every experience bears...").
+        // For other sections, a 5px scroll is enough to force GSAP to update.
+        const isLegacy = e.detail.id === 'legacy';
+        const scrollOffset = isLegacy ? 350 : 5;
+        lenis.scrollTo(targetY + scrollOffset, { duration: isLegacy ? 0.2 : 0.1 });
       };
 
       pendingJumpRef.current = syncAfterJump;
