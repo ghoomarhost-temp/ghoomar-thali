@@ -7,11 +7,11 @@ export default function Cursor() {
 
   useEffect(() => {
     // GSAP quickTo for high-performance cursor movement
-    const xDotTo = gsap.quickTo(dotRef.current, "x", { duration: 0.08, ease: "power3" });
-    const yDotTo = gsap.quickTo(dotRef.current, "y", { duration: 0.08, ease: "power3" });
+    const xDotTo = gsap.quickTo(dotRef.current, "x", { duration: 0.04, ease: "power3" });
+    const yDotTo = gsap.quickTo(dotRef.current, "y", { duration: 0.04, ease: "power3" });
     
-    const xRingTo = gsap.quickTo(ringRef.current, "x", { duration: 0.4, ease: "power3" });
-    const yRingTo = gsap.quickTo(ringRef.current, "y", { duration: 0.4, ease: "power3" });
+    const xRingTo = gsap.quickTo(ringRef.current, "x", { duration: 0.15, ease: "power3" });
+    const yRingTo = gsap.quickTo(ringRef.current, "y", { duration: 0.15, ease: "power3" });
 
     const onMove = (e) => {
       xDotTo(e.clientX);
