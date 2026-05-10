@@ -42,7 +42,8 @@ export default function LoadingScreen({ onComplete }) {
       rotation: 360,
       duration: 10,
       ease: 'none',
-      repeat: -1
+      repeat: -1,
+      force3D: true
     });
 
     // 1. Initial fade-in of the mandala and side texts
@@ -230,8 +231,10 @@ export default function LoadingScreen({ onComplete }) {
           style={{
             width: 'clamp(120px, 20vw, 260px)',
             height: 'clamp(120px, 20vw, 260px)',
-            willChange: 'transform, opacity, filter',
+            willChange: 'transform, opacity', // Removed filter from willChange to prevent SVG render lag
             opacity: 0,
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden'
           }}
         >
           <img src={mandalaSvg} alt="Mandala Preloader" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
