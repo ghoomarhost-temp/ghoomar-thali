@@ -143,7 +143,9 @@ export default function LocationSection() {
         PH4_ZOOM_DUR + PH5_DATA_DUR + PH6_EXPAND_DUR + PH7_END_GAP;
 
       // TOTAL_VH controls how long the pin lasts in viewports height.
-      const TOTAL_VH = TOTAL_DUR * 0.45; // Scale duration to manageable scroll height
+      // Reduced from 0.45 to 0.28 — the section was consuming too much scroll
+      // distance, making transitions feel sluggish and requiring excessive scrolling.
+      const TOTAL_VH = TOTAL_DUR * 0.28;
 
       // ── INITIAL STATES ───────────────────────────────────────────────────────
       gsap.set('.loc-overlay', { opacity: 1 });
@@ -199,7 +201,7 @@ export default function LocationSection() {
           trigger: outerRef.current,
           start: 'top top',
           end: () => `+=${TOTAL_VH * window.innerHeight}`,
-          scrub: 1.2,
+          scrub: 0.7,       // tighter than before — tracks the wheel responsively
           pin: true,           // pin the trigger itself (outerRef)
           pinSpacing: true,
           anticipatePin: 1,

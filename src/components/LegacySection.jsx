@@ -118,6 +118,10 @@ export default function LegacySection() {
         start:         'top top',
         end:           () => `+=${TOTAL_SEGS * window.innerHeight}`,
         pin:           containerRef.current,
+        // anticipatePin: 1 restored — without it GSAP can't prepare the
+        // position:fixed switch ahead of time, causing a 1-frame reflow stutter
+        // on every pin/unpin. The Brand→Legacy overlap is fixed via overflow:hidden
+        // on the outer div instead (clips content to section bounds before pinning).
         anticipatePin: 1,
         pinSpacing:    false,
         invalidateOnRefresh: true,
@@ -128,6 +132,9 @@ export default function LegacySection() {
       gsap.timeline({
         scrollTrigger: {
           trigger: outer,
+          // Back to 'top 65%' — gives a natural, readable bloom as Legacy enters.
+          // The Brand→Legacy overlap is now prevented by overflow:hidden on the outer
+          // wrapper div rather than by delaying this animation.
           start:   'top 65%',
           end:     () => `top+=${0.65 * window.innerHeight} top`,
           scrub:   SCRUB,
@@ -253,7 +260,15 @@ export default function LegacySection() {
     <div
       ref={outerRef}
       id="legacy"
-      style={{ position: 'relative', height: `${TOTAL_SEGS * 100}vh` }}
+      style={{
+        position: 'relative',
+        height: `${TOTAL_SEGS * 100}vh`,
+        // overflow:hidden clips the containerRef to this section's natural bounds
+        // before the pin fires. Once containerRef becomes position:fixed it escapes
+        // this clip (fixed positioning ignores parent overflow), so card animations
+        // below the 100vh boundary work correctly during pinning.
+        overflow: 'hidden',
+      }}
     >
       {/* ── Pinned viewport container ─────────────────────────────────────── */}
       {/* NO perspective here — it forces expensive stacking contexts on all children */}

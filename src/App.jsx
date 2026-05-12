@@ -33,8 +33,8 @@ function App() {
     window.scrollTo(0, 0);
 
     const lenis = new Lenis({
-      duration: 1.6,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.1,
+      easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -8 * t), // expo.out: fast start, gentle finish
       smoothWheel: true,
     });
     lenisRef.current = lenis;
@@ -53,10 +53,18 @@ function App() {
     };
     window.addEventListener('resize', handleResize);
 
+    // ── Global Scroll Lock Events ───────────────────────────────────────────
+    const stopScroll = () => lenis.stop();
+    const startScroll = () => lenis.start();
+    window.addEventListener('lenis:stop', stopScroll);
+    window.addEventListener('lenis:start', startScroll);
+
     return () => {
       lenis.destroy();
       gsap.ticker.remove(raf);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('lenis:stop', stopScroll);
+      window.removeEventListener('lenis:start', startScroll);
     };
   }, []);
 

@@ -121,6 +121,9 @@ html.lenis { height: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
 .lenis.lenis-scrolling iframe { pointer-events: none; }
 
+/* ─── Global Scroll Lock ────────────────────────────────────────────────────── */
+html.no-scroll, html.no-scroll body { overflow: hidden !important; }
+
 /* ─── Typography Utilities ──────────────────────────────────────────────────── */
 .font-royal { font-family: var(--font-royal); }
 .font-serif  { font-family: var(--font-serif); }
@@ -675,10 +678,23 @@ html.lenis { height: auto; }
 .menu-heading-gold { color: var(--gold); font-style: normal; font-weight: 400; }
 .menu-subtext { font-family: var(--font-body); font-size: 0.9rem; color: var(--sand); opacity: 0.5; letter-spacing: 0.04em; margin-top: 16px; font-weight: 300; }
 
-.menu-filter-bar { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 0 24px 64px; will-change: opacity, transform; }
-.menu-filter-pill { padding: 9px 22px; border-radius: 50px; border: 1px solid rgba(230,185,92,0.35); background: transparent; color: rgba(253,251,247,0.65); font-family: var(--font-royal); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: background 0.38s var(--ease-royal), color 0.38s var(--ease-royal), border-color 0.38s var(--ease-royal), transform 0.28s var(--ease-royal), box-shadow 0.38s var(--ease-royal); white-space: nowrap; }
+/* Filter wrapper: holds arrows + scrollable bar */
+.menu-filter-wrapper { position: relative; z-index: 2; display: flex; align-items: center; padding: 0 0 64px; will-change: opacity, transform; }
+
+/* Scrollable pill bar */
+.menu-filter-bar { display: flex; flex-wrap: nowrap; gap: 10px; overflow-x: auto; scroll-behavior: smooth; padding: 24px 24px; margin: -20px 0; scrollbar-width: none; -ms-overflow-style: none; flex: 1; mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%); }
+.menu-filter-bar::-webkit-scrollbar { display: none; }
+
+.menu-filter-pill { padding: 9px 22px; border-radius: 50px; border: 1px solid rgba(230,185,92,0.35); background: transparent; color: rgba(253,251,247,0.65); font-family: var(--font-royal); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: background 0.38s var(--ease-royal), color 0.38s var(--ease-royal), border-color 0.38s var(--ease-royal), transform 0.28s var(--ease-royal), box-shadow 0.38s var(--ease-royal); white-space: nowrap; flex-shrink: 0; }
 .menu-filter-pill:hover { border-color: var(--gold); color: var(--gold); transform: scale(1.05); box-shadow: 0 0 16px rgba(230,185,92,0.18); }
 .menu-filter-pill.active { background: var(--gold); border-color: var(--gold); color: var(--black); box-shadow: 0 0 28px rgba(230,185,92,0.32), 0 0 8px rgba(230,185,92,0.18); transform: scale(1.02); }
+
+/* Arrow buttons */
+.menu-filter-arrow { position: relative; z-index: 3; flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(230,185,92,0.28); background: rgba(26,10,19,0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--gold); font-size: 1.6rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s ease, background 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 12px rgba(230,185,92,0.08); }
+.menu-filter-arrow.visible { opacity: 1; pointer-events: auto; }
+.menu-filter-arrow:hover { background: rgba(230,185,92,0.15); box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 24px rgba(230,185,92,0.28); transform: scale(1.1); }
+.menu-filter-arrow--left { margin-left: 24px; margin-right: 6px; }
+.menu-filter-arrow--right { margin-right: 24px; margin-left: 6px; }
 
 .menu-circle-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.4vw 1.8vw; max-width: 1360px; margin: 0 auto; padding: 0 40px 80px; }
 .menu-circle-item.row-shifted { margin-top: 1.8vw; }
@@ -717,7 +733,7 @@ html.lenis { height: auto; }
 
 @media (max-width: 1200px) { .menu-circle-grid { grid-template-columns: repeat(4, 1fr); gap: 3vw 2.5vw; } .menu-circle-item.row-shifted { margin-top: 2.5vw; } }
 @media (max-width: 900px) { .menu-circle-grid { grid-template-columns: repeat(3, 1fr); gap: 4vw 3vw; padding: 0 24px 60px; } .menu-circle-item.row-shifted { margin-top: 3vw; } .panel-inner { grid-template-columns: 0.7fr 1.3fr; } }
-@media (max-width: 640px) { .royal-menu-section { padding: 80px 0 120px; } .menu-circle-grid { grid-template-columns: repeat(2, 1fr); gap: 5vw 4vw; padding: 0 16px 48px; } .menu-circle-item.row-shifted { margin-top: 4vw; } .menu-filter-bar { gap: 8px; padding: 0 16px 48px; } .menu-filter-pill { padding: 8px 16px; font-size: 0.58rem; } .panel-inner { grid-template-columns: 1fr; } .panel-image-wrap { display: none; } .panel-content { padding: 24px 20px; gap: 12px; } .menu-expand-panel { max-height: 70vh; border-radius: 16px 16px 0 0; } }
+@media (max-width: 640px) { .royal-menu-section { padding: 80px 0 120px; } .menu-circle-grid { grid-template-columns: repeat(2, 1fr); gap: 5vw 4vw; padding: 0 16px 48px; } .menu-circle-item.row-shifted { margin-top: 4vw; } .menu-filter-wrapper { padding: 0 0 48px; } .menu-filter-bar { gap: 8px; padding: 4px 12px; } .menu-filter-pill { padding: 8px 16px; font-size: 0.58rem; } .menu-filter-arrow { width: 38px; height: 38px; font-size: 1.3rem; } .menu-filter-arrow--left { margin-left: 8px; } .menu-filter-arrow--right { margin-right: 8px; } .panel-inner { grid-template-columns: 1fr; } .panel-image-wrap { display: none; } .panel-content { padding: 24px 20px; gap: 12px; } .menu-expand-panel { max-height: 70vh; border-radius: 16px 16px 0 0; } }
 @media (max-width: 400px) { .menu-circle-grid { grid-template-columns: 1fr; max-width: 260px; } .menu-circle-item.row-shifted { margin-top: 0; } }
 /* -- Dish Expand Card (hero expand from origin) ---------------------------- */
 
@@ -726,9 +742,7 @@ html.lenis { height: auto; }
   position: fixed;
   inset: 0;
   z-index: 199;
-  background: rgba(10, 4, 8, 0.72);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(10, 4, 8, 0.88); /* Darker background instead of expensive blur */
   animation: backdropFadeIn 0.3s ease forwards;
 }
 @keyframes backdropFadeIn {
@@ -746,6 +760,7 @@ html.lenis { height: auto; }
     0 0 0 1px rgba(230, 185, 92, 0.28),
     0 40px 120px rgba(0, 0, 0, 0.7),
     0 0 60px rgba(142, 31, 60, 0.25);
+  will-change: left, top, width, height, transform, border-radius;
 }
 
 /* Full-bleed background image */

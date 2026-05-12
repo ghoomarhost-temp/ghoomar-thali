@@ -7,11 +7,11 @@
 
 // ── Scroll scrub ──────────────────────────────────────────────────────────────
 /** Standard scrub for most scroll-linked animations */
-export const SCRUB = 1.2;
+export const SCRUB = 0.7;
 /** Tighter scrub for pinned section panels (feels more "locked") */
-export const SCRUB_TIGHT = 0.8;
+export const SCRUB_TIGHT = 0.5;
 /** Looser scrub for slow ambient parallax */
-export const SCRUB_PARALLAX = 2.5;
+export const SCRUB_PARALLAX = 1.4;
 
 // ── Easing ────────────────────────────────────────────────────────────────────
 export const EASE_ROYAL   = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';

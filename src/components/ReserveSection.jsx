@@ -8,7 +8,9 @@ const S2_DUR = 1.4;   // Stage 2: card rises
 const S3_DUR = 1.6;   // Stage 3: card flips
 const HOLD   = 2.0;   // Hold at end (persist final state)
 const TOTAL_DUR = S1_DUR + S2_DUR + S3_DUR + HOLD; // 6.0 units
-const TOTAL_VH  = TOTAL_DUR * 0.45;
+// Reduced from 0.45 to 0.32 — makes the card flip complete in less scroll distance,
+// preventing the animation from stalling mid-transition on normal scroll speed.
+const TOTAL_VH  = TOTAL_DUR * 0.32;
 
 export default function ReserveSection() {
   const outerRef     = useRef(null);
@@ -65,7 +67,7 @@ export default function ReserveSection() {
           trigger: outerRef.current,
           start: 'top top',
           end: () => `+=${TOTAL_VH * window.innerHeight}`,
-          scrub: 0.5,
+          scrub: 0.4,   // tight — card flip tracks the wheel with minimal lag
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
