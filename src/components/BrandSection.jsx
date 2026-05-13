@@ -80,7 +80,9 @@ function CountNum({ value, trigger, index = 0 }) {
         delay: 0.1 + index * 0.25, // Staggered counting
         snap: { val: raw < 10 ? 1 : 1 },
         onUpdate: () => {
-          ref.current.textContent = Math.round(obj.val) + suffix;
+          if (ref.current) {
+            ref.current.textContent = Math.round(obj.val) + suffix;
+          }
         },
         scrollTrigger: {
           trigger,
@@ -228,7 +230,7 @@ export default function BrandSection() {
           <div ref={img1Ref} style={{ willChange: 'transform' }}>
             <div className="scale-container" style={{ position: 'relative', overflow: 'visible', borderRadius: 4 }}>
               <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 4 }}>
-                <img src="/images/restaurant_interior_1776795925000.png" alt="Royal Interior"
+                <img src="/images/interiors/Ambeince_Mall_Vasant_Kunj_1.webp" alt="Royal Interior"
                   style={{ width: '100%', height: 560, objectFit: 'cover', filter: 'brightness(0.75) sepia(0.15)', display: 'block' }}
                 />
               </div>
@@ -242,7 +244,7 @@ export default function BrandSection() {
           <div ref={img2Ref} style={{ willChange: 'transform' }}>
             <div className="scale-container" style={{ position: 'relative', overflow: 'visible', borderRadius: 4 }}>
               <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 4 }}>
-                <img src="/images/palace_gate_1776795762650.png" alt="Palace Gate"
+                <img src="/images/interiors/Golf_Course_Road_Gurugram_2.webp" alt="Palace Gate"
                   style={{ width: '100%', height: 480, objectFit: 'cover', filter: 'brightness(0.65) sepia(0.2)', display: 'block' }}
                 />
               </div>

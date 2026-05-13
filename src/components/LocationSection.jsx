@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import MobileLocationSection from './MobileLocationSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -93,6 +94,14 @@ export default function LocationSection() {
   const outerRef = useRef(null);
   const stickyRef = useRef(null);
   const svgRef = useRef(null);
+  const [mapContent, setMapContent] = useState('');
+  const [mobile, setMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   // New refs for the Master Timeline strict architecture
   const titleWrapperRef = useRef(null);
@@ -102,8 +111,6 @@ export default function LocationSection() {
   const outpostsRef = useRef(null);
   const statesRef = useRef(null);
   const introRef = useRef(null);   // Intro paragraph shown when title shifts left
-
-  const [mapContent, setMapContent] = useState('');
 
   // Fetch + inline the SVG so it renders transparent against the dark background
   useEffect(() => {
@@ -115,8 +122,12 @@ export default function LocationSection() {
       });
   }, []);
 
+  if (mobile) {
+    return <MobileLocationSection mapContent={mapContent} />;
+  }
+
   useEffect(() => {
-    if (!mapContent) return; // Wait for SVG
+    if (!mapContent || mobile) return; // Skip complex GSAP on mobile
 
     const ctx = gsap.context(() => {
       // ── MASTER TIMELINE SETUP ────────────────────────────────────────────────
@@ -227,7 +238,7 @@ export default function LocationSection() {
         left: '7vw', top: '17vh', xPercent: 0, yPercent: 0, scale: 0.85,
         duration: PH2_LAYOUT_DUR, ease: 'power3.inOut'
       }, time);
-      
+
       // Smoothly left-align "OUR EMPIRE"
       tl.to('.section-tag', {
         x: () => {
@@ -248,7 +259,7 @@ export default function LocationSection() {
         },
         duration: PH2_LAYOUT_DUR, ease: 'power3.inOut'
       }, time);
-      
+
       tl.to('.part-2', {
         y: '100%',
         duration: PH2_LAYOUT_DUR, ease: 'power3.out' // Drops quickly to clear Part 1

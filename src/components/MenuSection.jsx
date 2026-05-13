@@ -31,6 +31,21 @@ export default function MenuSection() {
   const [showLeft,     setShowLeft]     = useState(false);
   const [showRight,    setShowRight]    = useState(true);
   const [visibleCount, setVisibleCount] = useState(10);
+  const [columns,      setColumns]      = useState(5);
+
+  useEffect(() => {
+    const updateCols = () => {
+      const w = window.innerWidth;
+      if (w <= 400) setColumns(1);
+      else if (w <= 640) setColumns(2);
+      else if (w <= 900) setColumns(3);
+      else if (w <= 1200) setColumns(4);
+      else setColumns(5);
+    };
+    updateCols();
+    window.addEventListener('resize', updateCols);
+    return () => window.removeEventListener('resize', updateCols);
+  }, []);
 
   const isPaginatingRef = useRef(false);
   const prevCountRef = useRef(0);
@@ -376,7 +391,7 @@ export default function MenuSection() {
       {/* ── Dish Grid ── */}
       <div ref={gridRef} className="menu-circle-grid" style={{ paddingBottom: (activeFilter === 'ALL' && visibleCount < interleavedAllItems.length) ? '40px' : '80px' }}>
         {filteredItems.map((item, i) => {
-          const row      = Math.floor(i / 5);
+          const row      = Math.floor(i / columns);
           const isOddRow = row % 2 === 1;
           const isSelected = selectedDish?.id === item.id;
           return (

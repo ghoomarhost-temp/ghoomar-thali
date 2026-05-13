@@ -134,16 +134,56 @@ export default function RoyalBackground() {
         }}
       />
 
-      {/* 2. Warm radial ambient glow — maroon-gold warmth at center */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(142,31,60,0.14) 0%, rgba(97,14,36,0.06) 50%, transparent 75%)',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* 2. Layered ambient glows — soft cinematic lighting */}
+      <style>{`
+        @keyframes drift-glow {
+          0% { transform: translate(0%, 0%) scale(1); }
+          100% { transform: translate(10%, 8%) scale(1.1); }
+        }
+        @keyframes drift-glow-reverse {
+          0% { transform: translate(0%, 0%) scale(1.1); }
+          100% { transform: translate(-8%, -12%) scale(1); }
+        }
+        @keyframes pulse-glow {
+          0% { opacity: 0.6; transform: scale(0.95); }
+          100% { opacity: 1; transform: scale(1.05); }
+        }
+      `}</style>
+      <div className="royal-glows" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+        {/* Soft dark vignette around edges to frame the entire page */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(14,6,12,0.85) 100%)',
+          zIndex: 1,
+        }} />
+        
+        {/* Deep maroon ambient (top-left) */}
+        <div style={{
+          position: 'absolute', top: '-10%', left: '-10%', width: '60vw', height: '60vh',
+          background: 'radial-gradient(circle, rgba(142,31,60,0.16) 0%, rgba(97,14,36,0.06) 40%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(60px)',
+          animation: 'drift-glow 18s ease-in-out infinite alternate',
+        }} />
+
+        {/* Warm gold ambient (bottom-right) */}
+        <div style={{
+          position: 'absolute', bottom: '-10%', right: '-10%', width: '70vw', height: '70vh',
+          background: 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, rgba(142,31,60,0.08) 30%, transparent 60%)',
+          borderRadius: '50%',
+          filter: 'blur(80px)',
+          animation: 'drift-glow-reverse 22s ease-in-out infinite alternate',
+        }} />
+        
+        {/* Deep wine tonal shift (center-ish) */}
+        <div style={{
+          position: 'absolute', top: '25%', left: '35%', width: '50vw', height: '50vh',
+          background: 'radial-gradient(circle, rgba(45,17,32,0.4) 0%, transparent 65%)',
+          borderRadius: '50%',
+          filter: 'blur(100px)',
+          animation: 'pulse-glow 15s ease-in-out infinite alternate',
+        }} />
+      </div>
 
       {/* 3. Ambient dust motes — barely visible floating gold specks */}
       {DUST_MOTES.map((mote, i) => (

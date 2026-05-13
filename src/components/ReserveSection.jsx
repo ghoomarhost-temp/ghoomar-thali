@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -19,8 +19,17 @@ export default function ReserveSection() {
   const cardWrapRef  = useRef(null);
   const cardFrontRef = useRef(null);
   const cardBackRef  = useRef(null);
+  const [mobile, setMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768);
 
   useEffect(() => {
+    const check = () => setMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  useEffect(() => {
+    if (mobile) return;
     const ctx = gsap.context(() => {
 
       // ── INITIAL STATES ──────────────────────────────────────────────────────
@@ -101,7 +110,7 @@ export default function ReserveSection() {
     }, outerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [mobile]);
 
   // ── Shared card face style ────────────────────────────────────────────────
   const face = {
@@ -171,6 +180,108 @@ export default function ReserveSection() {
       </div>
     );
   };
+
+  // ── Mobile render ────────────────────────────────────────────────────────
+  if (mobile) {
+    const face = {
+      background: `radial-gradient(circle at 18% 22%, rgba(150,20,50,0.35) 0%, rgba(150,20,50,0.1) 25%, transparent 45%),
+        radial-gradient(circle at 85% 25%, rgba(240,40,110,0.4) 0%, rgba(240,40,110,0.15) 25%, transparent 50%),
+        rgba(22,8,14,0.65)`,
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      border: '1px solid rgba(230,185,92,0.35)',
+      boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+    };
+    return (
+      <div id="reserve" style={{ position: 'relative', zIndex: 2 }}>
+        <div className="reserve-mobile-wrap" style={{ position: 'relative' }}>
+          {/* Ambient glow */}
+          <div style={{
+            position: 'absolute', inset: '-10%', pointerEvents: 'none', zIndex: 0,
+            background: 'radial-gradient(ellipse 70% 60% at 50% 40%, rgba(142,31,60,0.15) 0%, transparent 65%)',
+          }} />
+
+          {/* Title */}
+          <div className="reserve-mobile-header" style={{ position: 'relative', zIndex: 1 }}>
+            <span className="section-tag" style={{ letterSpacing: '0.5em', display: 'block', marginBottom: 14 }}>
+              Your Invitation
+            </span>
+            <h2 style={{
+              fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 300,
+              fontSize: 'clamp(1.8rem, 6vw, 2.6rem)', color: 'var(--ivory)', lineHeight: 1.1,
+            }}>
+              Reserve Your{' '}
+              <em style={{ color: 'var(--gold)', fontStyle: 'normal' }}>Royal Experience</em>
+            </h2>
+          </div>
+
+          {/* Card with form */}
+          <div className="reserve-mobile-card" style={{ ...face, position: 'relative', zIndex: 1 }}>
+            {['tl','tr','bl','br'].map(p => <RoyalCorner key={p} pos={p} />)}
+
+            <div style={{ textAlign: 'center', marginBottom: 28 }}>
+              <span style={{
+                fontFamily: 'var(--font-body)', fontSize: '0.62rem',
+                color: 'var(--gold)', letterSpacing: '0.45em',
+                textTransform: 'uppercase', display: 'block', marginBottom: 10,
+              }}>
+                Secure Your Table
+              </span>
+              <h3 style={{
+                fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 300,
+                fontSize: 'clamp(1.4rem, 5vw, 2rem)', color: 'var(--ivory)', lineHeight: 1.15,
+              }}>
+                Make a <em style={{ color: 'var(--gold)', fontStyle: 'normal' }}>Reservation</em>
+              </h3>
+              <div style={{ width: 40, height: 1, background: 'var(--gold)', margin: '16px auto 0', opacity: 0.5 }} />
+            </div>
+
+            <form className="reserve-mobile-form" onSubmit={e => e.preventDefault()}>
+              <div className="royal-field">
+                <label className="royal-label">Location</label>
+                <div className="royal-select-wrapper">
+                  <select className="royal-input">
+                    <option>Jaipur (The Original)</option>
+                    <option>New Delhi (CP)</option>
+                    <option>Mumbai (Bandra)</option>
+                    <option>Bangalore (Indiranagar)</option>
+                  </select>
+                </div>
+              </div>
+              <div className="royal-field">
+                <label className="royal-label">Guests</label>
+                <div className="royal-select-wrapper">
+                  <select className="royal-input">
+                    <option>1 Royal Guest</option>
+                    <option>2 Royal Guests</option>
+                    <option>4 Royal Guests</option>
+                    <option>6+ Royal Guests (Banquet)</option>
+                  </select>
+                </div>
+              </div>
+              <div className="royal-field">
+                <label className="royal-label">Date</label>
+                <input type="date" className="royal-input" />
+              </div>
+              <div className="royal-field">
+                <label className="royal-label">Time</label>
+                <div className="royal-select-wrapper">
+                  <select className="royal-input">
+                    <option>7:00 PM (Folk Music)</option>
+                    <option>8:00 PM (Main Performance)</option>
+                    <option>9:00 PM (Late Dinner)</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" className="btn-royal" style={{ marginTop: 8 }}>
+                <span style={{ letterSpacing: '0.2em', fontSize: '0.78rem' }}>Confirm Reservation</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 
@@ -391,19 +502,7 @@ export default function ReserveSection() {
         }
       `}</style>
 
-      {/* Bottom blending gradient to seamlessly merge with the footer */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: -1,
-          left: 0,
-          right: 0,
-          height: '20vh',
-          background: 'linear-gradient(to bottom, transparent 0%, var(--black) 100%)',
-          zIndex: 20,
-          pointerEvents: 'none',
-        }}
-      />
+
     </div>
   );
 }

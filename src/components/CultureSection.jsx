@@ -103,7 +103,7 @@ export default function CultureSection() {
             end: () => `top+=${(total * CULTURE_PANEL_OVERLAP + 0.45) * window.innerHeight} top`,
             scrub: true,
             invalidateOnRefresh: true,
-            onLeave:     () => gsap.set(stickyRef.current, { autoAlpha: 0 }),
+            onLeave: () => gsap.set(stickyRef.current, { autoAlpha: 0 }),
             onEnterBack: () => gsap.set(stickyRef.current, { autoAlpha: 1 }),
           }
         }
@@ -361,10 +361,10 @@ export default function CultureSection() {
                   {act.title}
                 </h3>
                 <p style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize: '1.04rem', lineHeight: 1.88,
-                    color: 'var(--ivory-dim)', maxWidth: 360,
-                  }}>
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '1.04rem', lineHeight: 1.88,
+                  color: 'var(--ivory-dim)', maxWidth: 360,
+                }}>
                   {parseDescChars(act.desc).map((wordObj, wIdx) => [
                     <span key={`w-${wIdx}`} style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
                       {wordObj.chars.map((c, cIdx) => (

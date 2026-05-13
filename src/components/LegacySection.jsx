@@ -3,9 +3,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SCRUB } from '../animation';
 
-const PEEK_H     = 64;   // visible strip of a buried card
-const CARD_GAP   = 14;   // breathing gap between stacked peek strips
-const NUM_CARDS  = 4;
+const PEEK_H = 64;   // visible strip of a buried card
+const CARD_GAP = 14;   // breathing gap between stacked peek strips
+const NUM_CARDS = 4;
 const TOTAL_SEGS = 6;    // 1 title + 4 card enters + 1 buffer/slide-out
 
 const CARDS = [
@@ -16,7 +16,7 @@ const CARDS = [
     sub: 'Unlimited · Pure Vegetarian · Rajasthani',
     body: 'Unlimited pure-vegetarian Rajasthani thali, crafted with ancestral recipes and the warmth of royal kitchens — served across three proud cities.',
     detail: 'Delhi  ·  Patna  ·  Guwahati',
-    image: '/images/legacy_thali.png',
+    image: '/images/interiors/DB_City_Square_Bhopal_4.webp',
     accentColor: '#E6B95C',
     coming: false,
   },
@@ -27,7 +27,7 @@ const CARDS = [
     sub: '25,000 sq. ft. of Rajasthani Soul',
     body: 'An entire world of unlimited food, vibrant folk performances and family celebration — curated as a complete royal cultural immersion.',
     detail: 'Gurugram',
-    image: '/images/legacy_village.png',
+    image: '/images/interiors/Golf_Course_Road_Gurugram_6.webp',
     accentColor: '#C2765A',
     coming: false,
   },
@@ -38,7 +38,7 @@ const CARDS = [
     sub: 'Pure Veg Fine Dining · Varanasi',
     body: "Multicuisine culinary artistry in the eternal city, where every plate carries the soulful precision of Ghoomar's royal heritage.",
     detail: 'Varanasi',
-    image: '/images/legacy_vedanta.png',
+    image: '/images/interiors/interior-1-vedanta.webp',
     accentColor: '#D4BFA9',
     coming: false,
   },
@@ -49,7 +49,7 @@ const CARDS = [
     sub: 'Rajasthani Travel & Pilgrimage',
     body: 'Curated travel and pilgrimage experiences where every mile is steeped in royal lore, ancient devotion, and the spirit of discovery.',
     detail: 'India & Beyond',
-    image: '/images/legacy_yatra.png',
+    image: '/images/interiors/DB_City_Square_Bhopal_16.webp',
     accentColor: '#E6B95C',
     coming: true,
   },
@@ -76,11 +76,11 @@ function CornerBrackets({ color }) {
 }
 
 export default function LegacySection() {
-  const outerRef     = useRef(null);
+  const outerRef = useRef(null);
   const containerRef = useRef(null);
-  const titleRef     = useRef(null);
-  const closingRef   = useRef(null);
-  const cardRefs     = useRef([]);
+  const titleRef = useRef(null);
+  const closingRef = useRef(null);
+  const cardRefs = useRef([]);
 
   const [headerH, setHeaderH] = useState(180);
 
@@ -101,29 +101,29 @@ export default function LegacySection() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const HEADER_H = headerH;
-      const outer  = outerRef.current;
+      const outer = outerRef.current;
 
       // containerYForCard reads window.innerHeight live so invalidateOnRefresh
       // and resize-triggered callbacks always use the current viewport height.
       const containerYForCard = (i) => {
         const cardH = window.innerHeight - HEADER_H;
-        const naturalTop    = HEADER_H + i * (PEEK_H + CARD_GAP);
+        const naturalTop = HEADER_H + i * (PEEK_H + CARD_GAP);
         const naturalBottom = naturalTop + cardH;
         return -Math.max(0, naturalBottom - window.innerHeight);
       };
 
       // ── Master Pin ──────────────────────────────────────────────────────────
       ScrollTrigger.create({
-        trigger:       outer,
-        start:         'top top',
-        end:           () => `+=${TOTAL_SEGS * window.innerHeight}`,
-        pin:           containerRef.current,
+        trigger: outer,
+        start: 'top top',
+        end: () => `+=${TOTAL_SEGS * window.innerHeight}`,
+        pin: containerRef.current,
         // anticipatePin: 1 restored — without it GSAP can't prepare the
         // position:fixed switch ahead of time, causing a 1-frame reflow stutter
         // on every pin/unpin. The Brand→Legacy overlap is fixed via overflow:hidden
         // on the outer div instead (clips content to section bounds before pinning).
         anticipatePin: 1,
-        pinSpacing:    false,
+        pinSpacing: false,
         invalidateOnRefresh: true,
       });
 
@@ -135,9 +135,9 @@ export default function LegacySection() {
           // Back to 'top 65%' — gives a natural, readable bloom as Legacy enters.
           // The Brand→Legacy overlap is now prevented by overflow:hidden on the outer
           // wrapper div rather than by delaying this animation.
-          start:   'top 65%',
-          end:     () => `top+=${0.65 * window.innerHeight} top`,
-          scrub:   SCRUB,
+          start: 'top 65%',
+          end: () => `top+=${0.65 * window.innerHeight} top`,
+          scrub: SCRUB,
           invalidateOnRefresh: true,
         },
       }).to(titleRef.current, { opacity: 1, y: 0, ease: 'power3.out', duration: 1 });
@@ -147,9 +147,9 @@ export default function LegacySection() {
       gsap.timeline({
         scrollTrigger: {
           trigger: outer,
-          start:   'top top',
-          end:     () => `+=${0.8 * window.innerHeight}`,
-          scrub:   SCRUB,
+          start: 'top top',
+          end: () => `+=${0.8 * window.innerHeight}`,
+          scrub: SCRUB,
           invalidateOnRefresh: true,
         },
       }).to(closingRef.current, { opacity: 1, y: 0, ease: 'power3.out', duration: 1 });
@@ -178,9 +178,9 @@ export default function LegacySection() {
         gsap.timeline({
           scrollTrigger: {
             trigger: outer,
-            start:   () => `top+=${(1 + i) * window.innerHeight} top`,
-            end:     () => `top+=${(2 + i) * window.innerHeight} top`,
-            scrub:   SCRUB,
+            start: () => `top+=${(1 + i) * window.innerHeight} top`,
+            end: () => `top+=${(2 + i) * window.innerHeight} top`,
+            scrub: SCRUB,
             invalidateOnRefresh: true,
             // ── Boundary snaps prevent stale transforms on fast reverse scroll ──
             // When this segment is fully entered (forward), snap to its end state.
@@ -218,8 +218,8 @@ export default function LegacySection() {
 
               // ── Update depth scale of all already-revealed cards ────────────
               for (let j = 0; j < i; j++) {
-                const depthNow  = i - j;
-                const scaleTo   = depthScale(depthNow);
+                const depthNow = i - j;
+                const scaleTo = depthScale(depthNow);
                 const scaleFrom = depthScale(depthNow - 1);
                 gsap.set(cards[j], { scale: scaleFrom + (scaleTo - scaleFrom) * p });
               }
@@ -242,11 +242,11 @@ export default function LegacySection() {
           immediateRender: false,
           scrollTrigger: {
             trigger: outer,
-            start:   () => `top+=${(TOTAL_SEGS - 1) * window.innerHeight} top`,
-            end:     () => `top+=${TOTAL_SEGS * window.innerHeight} top`,
-            scrub:   true,
+            start: () => `top+=${(TOTAL_SEGS - 1) * window.innerHeight} top`,
+            end: () => `top+=${TOTAL_SEGS * window.innerHeight} top`,
+            scrub: true,
             invalidateOnRefresh: true,
-            onLeave:     () => gsap.set(containerRef.current, { autoAlpha: 0 }),
+            onLeave: () => gsap.set(containerRef.current, { autoAlpha: 0 }),
             onEnterBack: () => gsap.set(containerRef.current, { autoAlpha: 1 }),
           }
         }
@@ -290,11 +290,7 @@ export default function LegacySection() {
           background: 'radial-gradient(ellipse at 50% 40%, rgba(142,31,60,0.14) 0%, transparent 65%)',
         }} />
 
-        {/* Top edge feather — softens the entry without creating a hard black bar */}
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2,
-          background: 'linear-gradient(to bottom, rgba(26,10,19,0.9) 0%, rgba(26,10,19,0.45) 6%, rgba(26,10,19,0.1) 13%, transparent 22%)',
-        }} />
+
 
         {/* ── Section Title ─────────────────────────────────────────────────── */}
         <div
@@ -386,7 +382,7 @@ export default function LegacySection() {
               {/* Left: Text */}
               <div style={{
                 flex: '0 0 48%',
-                padding: 'clamp(28px,4vh,52px) clamp(28px,4vw,60px)',
+                padding: 'clamp(16px,3vh,40px) clamp(20px,3vw,50px)',
                 display: 'flex', flexDirection: 'column', justifyContent: 'center',
                 borderRight: '1px solid rgba(230,185,92,0.10)',
                 position: 'relative',
@@ -394,21 +390,21 @@ export default function LegacySection() {
                 <span style={{
                   fontFamily: 'var(--font-royal)', fontSize: '0.6rem',
                   letterSpacing: '0.45em', color: card.accentColor,
-                  textTransform: 'uppercase', display: 'block', marginBottom: 18,
+                  textTransform: 'uppercase', display: 'block', marginBottom: 12,
                 }}>
                   {card.title}
                 </span>
 
                 <h3 style={{
                   fontFamily: 'var(--font-serif)',
-                  fontSize: 'clamp(2.2rem, 3.8vw, 3.8rem)',
+                  fontSize: 'clamp(1.8rem, 3.2vw, 3.4rem)',
                   fontWeight: 300, fontStyle: 'italic', color: 'var(--ivory)',
-                  lineHeight: 1.1, marginBottom: 20,
+                  lineHeight: 1.1, marginBottom: 12,
                 }}>
                   {card.tag}
                 </h3>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 22 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                   <div style={{ width: 40, height: 1, background: `linear-gradient(to right, ${card.accentColor}, transparent)` }} />
                   <div style={{ width: 5, height: 5, border: `1px solid ${card.accentColor}`, transform: 'rotate(45deg)', flexShrink: 0 }} />
                   <div style={{ fontFamily: 'var(--font-serif)', fontSize: '0.85rem', color: 'rgba(212,191,169,0.8)', fontStyle: 'italic' }}>
@@ -418,16 +414,16 @@ export default function LegacySection() {
 
                 <p style={{
                   fontFamily: 'var(--font-body)',
-                  fontSize: 'clamp(0.82rem, 1.1vw, 1rem)',
-                  lineHeight: 1.85, color: 'var(--ivory-dim)',
-                  fontWeight: 300, maxWidth: 420, marginBottom: 32,
+                  fontSize: 'clamp(0.8rem, 1vw, 0.95rem)',
+                  lineHeight: 1.7, color: 'var(--ivory-dim)',
+                  fontWeight: 300, maxWidth: 420, marginBottom: 20,
                 }}>
                   {card.body}
                 </p>
 
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: 16,
-                  paddingTop: 20,
+                  paddingTop: 16,
                   borderTop: '1px solid rgba(230,185,92,0.15)',
                 }}>
                   {card.coming ? (

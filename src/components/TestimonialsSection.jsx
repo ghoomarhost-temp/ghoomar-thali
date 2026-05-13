@@ -99,6 +99,7 @@ const CARD_THEMES = {
 
 const getTheme = (id) => (id % 2 !== 0 ? CARD_THEMES.beige : CARD_THEMES.pink);
 
+
 export default function TestimonialsSection() {
   const outerRef = useRef(null);
   const stickyRef = useRef(null);
@@ -113,6 +114,7 @@ export default function TestimonialsSection() {
   const [activeDot, setActiveDot] = useState(0);
 
   useEffect(() => {
+
     const ctx = gsap.context(() => {
       const totalCards = TESTIMONIALS.length;
       const SCROLL_DIST = 500;
@@ -268,6 +270,7 @@ export default function TestimonialsSection() {
           width: '100vw',
           overflow: 'hidden',
           display: 'flex',
+
           alignItems: 'center',
           isolation: 'isolate',
         }}

@@ -3,11 +3,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const links = [
-  { label: 'Story',        id: 'story' },
-  { label: 'Legacy',       id: 'legacy' },
-  { label: 'Menu',         id: 'menu' },
-  { label: 'Culture',      id: 'culture' },
-  { label: 'Locations',    id: 'locations' },
+  { label: 'Story', id: 'story' },
+  { label: 'Legacy', id: 'legacy' },
+  { label: 'Menu', id: 'menu' },
+  { label: 'Culture', id: 'culture' },
+  { label: 'Locations', id: 'locations' },
   { label: 'Testimonials', id: 'testimonials' },
 ];
 
@@ -23,7 +23,7 @@ export default function Navbar() {
     // On scroll: increase opacity (already blurred from start via CSS)
     ScrollTrigger.create({
       start: 'top+=80 top',
-      onEnter:     () => nav.classList.add('scrolled'),
+      onEnter: () => nav.classList.add('scrolled'),
       onLeaveBack: () => nav.classList.remove('scrolled'),
     });
   }, []);
@@ -56,7 +56,7 @@ export default function Navbar() {
           className="mobile-menu-btn"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'none' }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}
         >
           <div style={{ width: 24, height: 1, background: 'var(--gold)', marginBottom: 6 }} />
           <div style={{ width: 16, height: 1, background: 'var(--gold)', marginBottom: 6 }} />

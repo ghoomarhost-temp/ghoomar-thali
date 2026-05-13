@@ -107,7 +107,7 @@ function App() {
         ScrollTrigger.getAll().forEach(st => {
           if (st.scrub || !st.animation) return;
           const anim = st.animation;
-          if (y >= st.end)        { anim.pause(); anim.progress(1, true); }
+          if (y >= st.end) { anim.pause(); anim.progress(1, true); }
           else if (y <= st.start) { anim.pause(); anim.progress(0, true); }
         });
       };
@@ -159,12 +159,12 @@ function App() {
       const syncAfterJump = () => {
         pendingJumpRef.current = null;
         gsap.ticker.remove(syncAfterJump);
-        
+
         // Stabilize/update the timeline state at the exact jump position
         ScrollTrigger.update();
         forceSync(window.scrollY);
         snapAll(window.scrollY);
-        
+
         // THE MICRO-SCROLL FIX:
         // Immediately trigger a smooth downward movement. For 'legacy', we scroll 
         // 350px to perfectly reveal the promise text ("Every experience bears...").
@@ -186,7 +186,7 @@ function App() {
     <>
       <Cursor />
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
-      
+
       <div style={{ position: 'relative' }}>
         {/* Fixed global background — sits behind everything */}
         <RoyalBackground />

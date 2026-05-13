@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: monospace; display: flex; flex-wrap: wrap; gap: 20px; }
+        .img-container { border: 1px solid #ccc; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        img { max-width: 300px; max-height: 300px; }
+    </style>
+</head>
+<body>
+    <script>
+        const images = [
+            "Ambeince_Mall_Vasant_Kunj_1.webp",
+            "DB_City_Square_Bhopal_16.webp",
+            "DB_City_Square_Bhopal_4.webp",
+            "Golf_Course_Road_Gurugram_2.webp",
+            "Golf_Course_Road_Gurugram_6.webp",
+            "HRK_4166.webp",
+            "IMG-20221021-WA0021.webp",
+            "interior-1-vedanta.webp"
+        ];
+        images.forEach(src => {
+            const container = document.createElement('div');
+            container.className = 'img-container';
+            const img = document.createElement('img');
+            img.src = '/images/interiors/' + src;
+            const label = document.createElement('div');
+            img.onload = () => {
+                const isPortrait = img.naturalHeight > img.naturalWidth;
+                label.innerHTML = `<strong>${src}</strong><br>${img.naturalWidth}x${img.naturalHeight} <br>${isPortrait ? '<span style="color:red">PORTRAIT</span>' : '<span style="color:blue">LANDSCAPE</span>'}`;
+            };
+            img.onerror = () => {
+                label.innerHTML = `<strong>${src}</strong><br>ERROR LOADING`;
+            };
+            container.appendChild(img);
+            container.appendChild(label);
+            document.body.appendChild(container);
+        });
+    </script>
+</body>
+</html>
