@@ -457,6 +457,10 @@ html.no-scroll body {
   color: var(--gold);
 }
 
+.mobile-menu-btn {
+  display: none;
+}
+
 .nav-cta {
   font-family: var(--font-royal);
   font-size: 0.7rem;
@@ -835,7 +839,7 @@ html.no-scroll body {
 }
 
 @media (max-width: 768px) {
-  .nav-links {
+  .nav-links, .nav-cta {
     display: none;
   }
 

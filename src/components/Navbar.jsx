@@ -79,6 +79,10 @@ export default function Navbar() {
               fontSize: '1.4rem', letterSpacing: '0.3em', color: 'var(--gold)', cursor: 'pointer', textTransform: 'uppercase',
             }}>{link.label}</button>
           ))}
+          <button onClick={() => scrollTo('reserve')} style={{
+            background: 'none', border: 'none', fontFamily: 'var(--font-royal)',
+            fontSize: '1.4rem', letterSpacing: '0.3em', color: 'var(--gold)', cursor: 'pointer', textTransform: 'uppercase',
+          }}>Reserve Table</button>
         </div>
       )}
     </>
